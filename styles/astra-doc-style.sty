@@ -1,0 +1,289 @@
+%%% Astra Doc Style v2.1 — Light, modern, CJK-capable, Godot-inspired
+%%% Fonts: Noto Serif + Noto Sans (English), Noto Serif CJK SC + Noto Sans CJK SC (Chinese)
+%%% Usage: pandoc input.md -o output.pdf --pdf-engine=lualatex -H astra-doc-style.sty
+
+\usepackage[table]{xcolor}
+\usepackage[bf,sf]{titlesec}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{luatexja-fontspec}
+
+%%% English fonts — Noto (system packages: google-noto-sans-fonts, google-noto-serif-fonts)
+\setmainfont{NotoSerif}
+\setsansfont{NotoSans}
+\setmonofont{FiraMono}
+
+%%% CJK fonts — Noto (CJK SC variants)
+%%% JFM={!} required for fonts without TeX Live JFM metrics
+\setmainjfont{Noto Serif CJK SC}[JFM={!}]
+\setsansjfont{Noto Sans CJK SC}[
+  Path = /usr/share/fonts/truetype/,
+  Extension = .otf,
+  UprightFont = NotoSansCJKsc-VF,
+  Renderer = HarfBuzz,
+  JFM={!},
+]
+\setmonojfont{Noto Sans CJK SC}[
+  Path = /usr/share/fonts/truetype/,
+  Extension = .otf,
+  UprightFont = NotoSansCJKsc-VF,
+  Renderer = HarfBuzz,
+  JFM={!},
+]
+
+%%% Emoji support (lualatex only)
+\usepackage{emoji}
+\setemojifont{NotoColorEmoji}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{mdframed}
+
+%%% Colors — Godot-inspired clean light palette
+\definecolor{primary}{HTML}{1A1A2E}
+\definecolor{accent}{HTML}{3465A4}
+\definecolor{accentlight}{HTML}{DEE5F2}
+\definecolor{linkcolor}{HTML}{3465A4}
+\definecolor{textmain}{HTML}{1A1A2E}
+\definecolor{textsec}{HTML}{555570}
+\definecolor{textmuted}{HTML}{8888A0}
+\definecolor{bordercolor}{HTML}{DCDCE6}
+\definecolor{codebg}{HTML}{E4E4E4}
+\definecolor{codeframe}{HTML}{E2E2EA}
+
+%%% Syntax highlighting colors (Godot-style)
+\definecolor{synkeyword}{HTML}{3465A4}
+\definecolor{synstring}{HTML}{4E9A06}
+\definecolor{syncomment}{HTML}{8888A0}
+\definecolor{synnumber}{HTML}{AD7FA8}
+\definecolor{syntype}{HTML}{C4A000}
+
+%%% Callout colors
+\definecolor{notebg}{HTML}{DEE5F2}
+\definecolor{noteborder}{HTML}{3465A4}
+\definecolor{tipbg}{HTML}{D5F5E3}
+\definecolor{tipborder}{HTML}{27AE60}
+\definecolor{warnbg}{HTML}{FEF5E7}
+\definecolor{warnborder}{HTML}{F39C12}
+
+%%% Page
+\geometry{a4paper, margin=2.2cm, headheight=14pt}
+\setstretch{1.1}
+
+%%% Title page — clean minimal, standalone cover, no author/date
+\pretitle{%
+  \thispagestyle{empty}
+  \begin{center}\vspace*{4cm}
+  \sffamily\huge\bfseries\color{primary}
+}
+\posttitle{\par\end{center}\newpage}
+\preauthor{}
+\postauthor{}
+\predate{}
+\postdate{}
+% Suppress empty author/date blocks from pandoc's title page
+% Force standalone cover page — after the title block, flush to new page
+% and reset page numbering for the body
+\AtBeginDocument{\AfterEndPreamble{%
+  \gdef\thepage{\arabic{page}}%
+}}
+
+%%% Part page (volume divider) — standalone centered page
+% The article class already has \part, we just style it.
+\titleformat{\part}[display]
+  {\newpage\thispagestyle{empty}\null\vfill\begin{center}}
+  {}
+  {0pt}
+  {\sffamily\Huge\bfseries\color{primary}}
+  [\end{center}\vfill\clearpage]
+\titlespacing*{\part}{0pt}{0pt}{0pt}
+
+%%% Sections — clean hierarchy, each starts on new page
+\let\stdsection\section
+\renewcommand{\section}{\clearpage\stdsection}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{primary}}
+  {\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2.5em}{0.5em}
+
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{primary}}
+  {\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.3em}
+
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{primary}}
+  {\thesubsubsection}{1em}{}
+\titlespacing*{\subsubsection}{0pt}{1em}{0.2em}
+
+%%% TOC — centered title, Chinese heading
+\renewcommand{\contentsname}{目录}
+\renewcommand{\cfttoctitlefont}{\sffamily\Large\bfseries\color{primary}\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftsecfont}{\sffamily\color{primary}}
+\renewcommand{\cftsecfont}{\sffamily\color{primary}}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\setlength{\cftbeforesecskip}{0.3em}
+
+%%% Code blocks — with line numbers, gray background, syntax highlighting
+\lstset{
+  language=bash,
+  basicstyle=\small\ttfamily,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  framexleftmargin=14pt,
+  framexrightmargin=4pt,
+  framesep=3pt,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{textmuted},
+  numbersep=8pt,
+  stepnumber=1,
+  keywordstyle=\color{synkeyword},
+  stringstyle=\color{synstring},
+  commentstyle=\color{syncomment},
+  numberstyle=\color{textmuted},
+  extendedchars=false,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+
+%%% Callout boxes — Note, Tip, Warning
+% Note (blue)
+\newenvironment{note}{%
+  \mdframed[
+    backgroundcolor=notebg,
+    linecolor=noteborder,
+    linewidth=1.5pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    innertopmargin=6pt,
+    innerbottommargin=6pt,
+    innerleftmargin=12pt,
+    innerrightmargin=6pt,
+    skipabove=8pt,
+    skipbelow=8pt,
+  ]
+  \small\sffamily\bfseries\color{noteborder} Note:\normalfont\color{textmain}\
+}{\endmdframed}
+
+% Tip (green)
+\newenvironment{tip}{%
+  \mdframed[
+    backgroundcolor=tipbg,
+    linecolor=tipborder,
+    linewidth=1.5pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    innertopmargin=6pt,
+    innerbottommargin=6pt,
+    innerleftmargin=12pt,
+    innerrightmargin=6pt,
+    skipabove=8pt,
+    skipbelow=8pt,
+  ]
+  \small\sffamily\bfseries\color{tipborder} Tip:\normalfont\color{textmain}\
+}{\endmdframed}
+
+% Warning (orange)
+\newenvironment{warning}{%
+  \mdframed[
+    backgroundcolor=warnbg,
+    linecolor=warnborder,
+    linewidth=1.5pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    innertopmargin=6pt,
+    innerbottommargin=6pt,
+    innerleftmargin=12pt,
+    innerrightmargin=6pt,
+    skipabove=8pt,
+    skipbelow=8pt,
+  ]
+  \small\sffamily\bfseries\color{warnborder} Warning:\normalfont\color{textmain}\
+}{\endmdframed}
+
+%%% Inline code (backtick) — GitHub-style gray background
+%%% Applied via pandoc Lua filter: --lua-filter=inline-code-bg.lua
+\setlength{\fboxsep}{1.5pt}
+\newcommand{\icode}[1]{{\colorbox{codebg}{\texttt{#1}}}}
+
+%%% Tables — modern, light, with alternating rows
+\usepackage{tabularx}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{5pt}
+\setlength{\abovetopsep}{2pt}
+\setlength{\belowbottomsep}{2pt}
+% Alternating row colors
+\rowcolors{2}{accentlight}{white}
+% Light border colors and modern rules
+\arrayrulecolor{bordercolor}
+\setlength{\heavyrulewidth}{0.6pt}
+\setlength{\lightrulewidth}{0.3pt}
+\setlength{\cmidrulewidth}{0.4pt}
+% Always use booktabs rules
+\AtBeginEnvironment{longtable}{%
+  \footnotesize\setlength{\tabcolsep}{3pt}%
+  \rowcolors{2}{accentlight}{white}%
+}
+\AtBeginEnvironment{tabular}{%
+  \footnotesize\setlength{\tabcolsep}{3pt}%
+  \rowcolors{2}{accentlight}{white}%
+}
+\AtBeginEnvironment{tabularx}{\footnotesize\rowcolors{2}{accentlight}{white}}
+
+%%% Hyperlinks — blue, underlined
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkcolor,
+  urlcolor=linkcolor,
+}
+
+%%% Lists — compact
+\setlist{nosep, leftmargin=1.8em}
+
+%%% Header/Footer — minimal
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{textsec}Hermes Agent 完全教程}
+\fancyhead[R]{\sffamily\footnotesize\color{textsec}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{bordercolor}\hrule}
+
+%%% Pandoc blockquotes → styled as callout
+\let\oldquote\quote
+\let\endoldquote\endquote
+\renewenvironment{quote}{%
+  \mdframed[
+    backgroundcolor=accentlight,
+    linecolor=accent,
+    linewidth=1.5pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    innertopmargin=6pt,
+    innerbottommargin=6pt,
+    innerleftmargin=10pt,
+    innerrightmargin=6pt,
+    skipabove=6pt,
+    skipbelow=6pt,
+  ]\small
+}{\endmdframed}

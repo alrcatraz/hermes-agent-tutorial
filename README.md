@@ -4,8 +4,14 @@ version: 1.0.0
 
 # Hermes Agent Complete Tutorial
 
+<div align="center">
+
+[![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE) [![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial) [![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
+
 > From scratch installation · Quick start · Advanced configuration  
 > CC BY-SA 4.0 © 2026 Nanaly
+
+</div>
 
 ---
 
@@ -46,13 +52,21 @@ pandoc hermes-tutorial-combined.md \
   -o ../build/hermes-agent-tutorial.pdf
 ```
 
+## Related
+
+- [astra-aiagent-infra](https://github.com/alrcatraz/astra-aiagent-infra) — ecosystem portal
+
 ## License
 
 This tutorial is licensed under **CC BY-SA 4.0** — you are free to share and adapt it, provided you give appropriate credit and share under the same licence.
 
-## Dependencies
-
-This tutorial is written from scratch and has no external dependencies.
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date" width="600" />
+  </picture>
+</div>
 
 ---
 

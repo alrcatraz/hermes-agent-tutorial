@@ -9,7 +9,7 @@ version: 1.0.0
 [![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE) [![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial) [![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
 
 > From scratch installation · Quick start · Advanced configuration  
-> CC BY-SA 4.0 © 2026 Nanaly
+> CC BY-SA 4.0 © 2026 [alrcatraz](https://github.com/alrcatraz)
 
 </div>
 

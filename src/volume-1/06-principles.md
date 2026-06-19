@@ -1,5 +1,4 @@
-# 第六章：工作原则与偏好配置
-\label{ch:6}
+# 第六章：工作原则与偏好配置 {#ch:6}
 
 <!--
 Draft: Chapter on SOUL.md work principles for the Hermes Agent tutorial.

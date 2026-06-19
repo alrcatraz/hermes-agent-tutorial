@@ -1,5 +1,4 @@
-# 第十五章：登录凭据管理
-\label{ch:15}
+# 第十五章：登录凭据管理 {#ch:15}
 
 !!! info "本章对应 Astra 生态组件"
     - KeePassXC — Web 凭据管理
@@ -161,7 +160,7 @@ echo "$PASS" | gpg --batch --no-tty --passphrase-fd 0 \
 
 ### 非交互式解密（自动化 / Cron）
 
-对于 cron job、后台脚本等自动化场景，此解密方式天然支持无交互运行——口令从 `.env` 读取，不触发 pinentry 弹窗，适合全自动巡检脚本（详见第十六章 SRE）。
+对于 cron job、后台脚本等自动化场景，此解密方式天然支持无交互运行——口令从 `.env` 读取，不触发 pinentry 弹窗，适合全自动巡检脚本（详见[第十六章 SRE](#ch:16)）。
 
 !!! warning "安全注意"
     `.env` 文件本身包含明文口令，需确保文件权限为 `600`（仅所有者可读写），且不提交到版本管理。
@@ -175,11 +174,3 @@ echo "$PASS" | gpg --batch --no-tty --passphrase-fd 0 \
 ```
 
 **两个系统独立运行，互不依赖，各管一类凭据。**
-
----
-
-!!! info "本章正在编写中"
-    - KeePassXC 数据库的创建与管理
-    - GPG 密钥生成与配置
-    - Git credential helper 链的搭建
-    - 自动化密码注入的最佳实践

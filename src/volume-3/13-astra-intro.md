@@ -1,5 +1,4 @@
-# 第十三章：关于 Astra 生态
-\label{ch:13}
+# 第十三章：关于 Astra 生态 {#ch:13}
 
 !!! info "本卷说明"
     本卷部分组件属于 **Astra 生态**。Astra 生态是作者 alrcatraz 个人构建的开源扩展体系——它们并非 Hermes Agent 官方功能，而是基于 Hermes 的插件（Plugins）、MCP 服务器、技能（Skills）等扩展体系实现的**个人实践**。这些组件已在作者的生产环境中运行，可作为自建参考。

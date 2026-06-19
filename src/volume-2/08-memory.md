@@ -1,5 +1,4 @@
-# 第八章：外部记忆系统配置
-\label{ch:8}
+# 第八章：外部记忆系统配置 {#ch:8}
 
 Hermes Agent 支持八种外部记忆提供者（Memory Provider），从轻量键值存储到支持代数推理的深度记忆引擎。本章首先介绍全部八种提供者，再推荐默认选项 Holographic Memory，并给出管理建议。
 
@@ -29,7 +28,7 @@ memory:
   memory_char_limit: 4000
 ```
 
-详见 §8.2（推荐默认方案详细配置）。
+详见 [§8.2](#sec:8-2)。
 
 ### 8.1.2 Honcho
 
@@ -153,7 +152,7 @@ memory:
     - 云端免运维 → ByteRover
     - 多 Agent 共享 → Supermemory
 
-## 8.2 Holographic Memory（推荐默认方案）
+## 8.2 Holographic Memory（推荐默认方案） {#sec:8-2}
 
 Holographic Memory 是 Hermes 推荐的外部记忆方案。它基于实体-关系模型，为每个事实附加实体标签和信任评分，支持代数级别的组合推理。
 

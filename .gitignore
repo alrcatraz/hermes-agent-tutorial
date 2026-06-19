@@ -28,6 +28,7 @@ Thumbs.db
 
 # ── Docs build ─────────────────────────────────────
 build/
+site/
 luatex.*/
 test-*.aux
 test-*.log

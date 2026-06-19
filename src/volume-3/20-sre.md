@@ -1,5 +1,4 @@
-# 第二十章：个人设备健康检测与自动维护（SRE）
-\label{ch:20}
+# 第二十章：个人设备健康检测与自动维护（SRE） {#ch:20}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-sre`](https://github.com/alcatraz/astra-sre) — 统一 SRE 协调层
@@ -21,7 +20,7 @@
 
 ## 20.3 设备清单管理
 
-Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/Documents/credentials/*.yaml.gpg` 文件读取（见第十五章 §15.4 的系统二）：
+Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/Documents/credentials/*.yaml.gpg` 文件读取（[见第十五章](#ch:15) §15.4 的系统二）：
 
 ```yaml
 # ~/Projects/astra/astra-sre/config/devices.yaml.example
@@ -41,7 +40,7 @@ devices:
 ```
 
 !!! note "凭据分离原则"
-    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/Documents/credentials/*.yaml.gpg` 中（见第十五章 §15.4）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
+    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/Documents/credentials/*.yaml.gpg` 中（[见第十五章](#ch:15) §15.4）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
 
 设备访问矩阵示例：
 
@@ -57,7 +56,7 @@ devices:
 - **关键服务状态** — 可配置的 systemd 服务列表检查
 - **网络可达性** — ping 检查
 
-**凭据读取：** 巡检脚本通过 `~/Documents/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（见第十五章 §15.4），不在脚本或配置文件内存储任何明文密码。
+**凭据读取：** 巡检脚本通过 `~/Documents/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（[见第十五章](#ch:15) §15.4），不在脚本或配置文件内存储任何明文密码。
 
 **运行方式：**
 

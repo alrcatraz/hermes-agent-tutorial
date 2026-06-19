@@ -1,6 +1,5 @@
-# 第十四章：Astra Hub——生态门户
+# 第十四章：Astra Hub——生态门户 {#ch:14}
 
-\label{ch:14}
 
 !!! info "关于 Astra 生态"
     本书开卷已对 Astra 生态做了总览。本章详细介绍生态门户——Astra Hub（`astra-aiagent-infra`）——作为统一索引、注册表和模板引擎的具体实现。它不包含业务逻辑，而是扮演三个角色：

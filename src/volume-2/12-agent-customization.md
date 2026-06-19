@@ -1,5 +1,4 @@
-# 第十二章：Agent 定制（SOUL 与 Personality）
-\label{ch:12}
+# 第十二章：Agent 定制（SOUL 与 Personality） {#ch:12}
 
 ## 12.1 配置即身份
 

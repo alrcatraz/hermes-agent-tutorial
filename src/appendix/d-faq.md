@@ -1,5 +1,4 @@
-# 附录D：常见问题
-\label{appendix:d}
+# 附录D：常见问题 {#appendix:d}
 
 **Q: 智谱 BigModel 模型返回 401？**
 
@@ -24,7 +23,7 @@ A: 如果配置了 HuggingFace 作为备用，确认三件事：
 
 A: 如果使用 SearXNG，检查上游搜索引擎的可用性。DuckDuckGo 在国内经常
 被阻断，建议在 SearXNG 配置中启用 Bing、Brave 等国内可达的
-上游，或者使用百度百科、知乎等中文源。详见\hyperref[ch:10]{第十章}。
+上游，或者使用百度百科、知乎等中文源。详见[第十章](#ch:10)。
 
 **Q: Gateway 配置后没有反应？**
 
@@ -69,7 +68,7 @@ stdout 直接投递，无需 LLM 中转，零管道断裂风险。
 
 A: 对于纯脚本任务（数据收集、状态检查），使用 `no_agent=true` 模式绕过 LLM，
 脚本 stdout 直接投递。对于需要总结、筛选、判断的任务才使用 agent 模式。
-详见第\hyperref[ch:20]{二十章}的运行时选择原则。
+详见第[二十章](#ch:20)的运行时选择原则。
 
 **Q: Gateway E2EE 消息无法解密？**
 
@@ -91,7 +90,7 @@ A: 国内网络环境中，部分 Provider API 端点可能被阻断。按以下
 
 1. 测试 API 可用性（如 `curl -I https://api.openai.com/v1/models`）
 2. 如果不可达，检查代理/VPN 是否正常（特别是全局模式）
-3. 配置多 Provider 回退（详见第\hyperref[ch:7]{七章}多模型协作）
+3. 配置多 Provider 回退（详见第[七章](#ch:7)多模型协作）
 4. 使用 `hermes gateway status` 确认 Gateway 平台在线
 
 ---

@@ -1,5 +1,4 @@
-# 第十七章：全流程工作原则的 Skill 辅助监督
-\label{ch:17}
+# 第十七章：全流程工作原则的 Skill 辅助监督 {#ch:17}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-skill-execution-framework`](https://github.com/alcatraz/astra-skill-execution-framework) — 执行框架

@@ -1,5 +1,4 @@
-# 第十章：SearXNG 部署与搜索配置
-\label{ch:10}
+# 第十章：SearXNG 部署与搜索配置 {#ch:10}
 
 ## 10.1 什么是 SearXNG？
 
@@ -248,7 +247,7 @@ Hermes 官方支持以下八种 Web 搜索后端：
 | `xai` | ✅ | ❌ | API 服务 | 需代理 | xAI 搜索集成 |
 
 !!! info "关键区别"
-    只有 `firecrawl`、`tavily`、`exa`、`parallel` 同时支持搜索和网页内容提取（`web_extract`）。其余后端（`searxng`、`brave`、`ddgs`、`xai`）仅提供搜索，无法提取完整网页内容。使用纯搜索后端时，可用 MarkItDown MCP 工具（见第十一章）独立提取网页内容。
+    只有 `firecrawl`、`tavily`、`exa`、`parallel` 同时支持搜索和网页内容提取（`web_extract`）。其余后端（`searxng`、`brave`、`ddgs`、`xai`）仅提供搜索，无法提取完整网页内容。使用纯搜索后端时，可用 MarkItDown MCP 工具（[见第十一章](#ch:11)）独立提取网页内容。
 
 ## 10.5 常见问题
 
@@ -259,7 +258,7 @@ SearXNG 是**纯搜索后端**，只能返回标题、URL 和简介。
 如需提取完整网页内容，有以下选择：
 
 - 切换到同时支持搜索和提取的后端：`firecrawl`、`tavily`、`exa`、`parallel`
-- 保持 SearXNG 作为搜索后端，使用 MarkItDown MCP 工具（见第十一章）独立提取
+- 保持 SearXNG 作为搜索后端，使用 MarkItDown MCP 工具（[见第十一章](#ch:11)）独立提取
 
 ### 搜索失败/超时
 
@@ -332,7 +331,7 @@ web:
 ### 纯搜索后端 + MCP 工具组合
 
 如果使用纯搜索后端（SearXNG、Brave、DDGS、xAI），可以通过 MarkItDown MCP
-工具（见第十一章）独立提取网页内容。这不是 `extract_backend` 配置，而是 Agent
+工具（[见第十一章](#ch:11)）独立提取网页内容。这不是 `extract_backend` 配置，而是 Agent
 在对话中自主调用 `convert_to_markdown` 工具：
 
 ![SearXNG 搜索与 MCP 提取流程](../diagrams/search-flow.svg)

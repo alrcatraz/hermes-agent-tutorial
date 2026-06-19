@@ -1,5 +1,4 @@
-# 第三章：安装 Hermes Agent
-\label{ch:3}
+# 第三章：安装 Hermes Agent {#ch:3}
 
 ## 3.1 三种安装方式对比
 

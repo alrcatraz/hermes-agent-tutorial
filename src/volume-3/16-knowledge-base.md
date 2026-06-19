@@ -1,5 +1,4 @@
-# 第十六章：知识库与信息分级储存
-\label{ch:16}
+# 第十六章：知识库与信息分级储存 {#ch:16}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-knowledge-base-mcp`](https://github.com/alrcatraz/astra-knowledge-base-mcp) — MCP 知识库服务

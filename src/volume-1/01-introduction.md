@@ -1,5 +1,4 @@
-# 第一章：认识 Hermes Agent
-\label{ch:1}
+# 第一章：认识 Hermes Agent {#ch:1}
 
 ## 1.1 什么是 Hermes Agent？
 
@@ -74,15 +73,15 @@ OpenClaw 是 Hermes Agent 的前身。Hermes Agent 最初是 OpenClaw 的一个*
 
 | 层级 | 能力 | 对应章节 |
 |:-----|:-----|:---------|
-| 第一卷 | 运行命令、读写文件、搜索网络、编写代码 | \hyperref[ch:2]{第二章}～\hyperref[ch:5]{第五章} |
-| 第一卷 | Gateway 聊天平台配置与开机自启 | \hyperref[ch:5]{第五章} |
-| 附录 | 核心概念速览（会话、工具、技能、记忆） | \hyperref[appendix:a]{附录A} |
-| 第一卷 | 工作原则与偏好配置——理解 Agent 的行为准则 | \hyperref[ch:6]{第六章} |
-| 第二卷 | 多模型协作（主模型 DeepSeek + 辅助模型 智谱 BigModel） | \hyperref[ch:7]{第七章} |
-| 第二卷 | 跨会话持久记忆（Holographic Memory） | \hyperref[ch:8]{第八章} |
-| 第二卷 | Gateway 打断行为控制 | \hyperref[ch:9]{第九章} |
-| 第二卷 | 自托管搜索引擎 SearXNG 部署 | \hyperref[ch:10]{第十章} |
-| 第二卷 | MarkItDown MCP —— 网页提取与文档分析 | \hyperref[ch:11]{第十一章} |
-| 附录 | 完整配置示例 | \hyperref[appendix:c]{附录C} |
+| 第一卷 | 运行命令、读写文件、搜索网络、编写代码 | [第二章](#ch:2)～[第五章](#ch:5) |
+| 第一卷 | Gateway 聊天平台配置与开机自启 | [第五章](#ch:5) |
+| 附录 | 核心概念速览（会话、工具、技能、记忆） | [附录A](#appendix:a) |
+| 第一卷 | 工作原则与偏好配置——理解 Agent 的行为准则 | [第六章](#ch:6) |
+| 第二卷 | 多模型协作（主模型 DeepSeek + 辅助模型 智谱 BigModel） | [第七章](#ch:7) |
+| 第二卷 | 跨会话持久记忆（Holographic Memory） | [第八章](#ch:8) |
+| 第二卷 | Gateway 打断行为控制 | [第九章](#ch:9) |
+| 第二卷 | 自托管搜索引擎 SearXNG 部署 | [第十章](#ch:10) |
+| 第二卷 | MarkItDown MCP —— 网页提取与文档分析 | [第十一章](#ch:11) |
+| 附录 | 完整配置示例 | [附录C](#appendix:c) |
 
 ---

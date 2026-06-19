@@ -1,5 +1,4 @@
-# 第十八章：浏览器自动化与登录持久化（Camofox）
-\label{ch:18}
+# 第十八章：浏览器自动化与登录持久化（Camofox） {#ch:18}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-camofox-browser`](https://github.com/alcatraz/astra-camofox-browser) — Camofox 封装
@@ -165,7 +164,7 @@ Camofox 将浏览器状态保存到 `~/.camofox/profiles/<hash>/storage-state.js
 
 **持久化策略：**
 
-1. **首次登录** — 使用 Hermes 的 credential 系统（见第十五章）获取网站凭据，通过 Camofox REST API 执行登录，浏览器 profile 自动持久化 Cookie
+1. **首次登录** — 使用 Hermes 的 credential 系统（[见第十五章](#ch:15)）获取网站凭据，通过 Camofox REST API 执行登录，浏览器 profile 自动持久化 Cookie
 2. **后续访问** — 指定相同的 `userId` / `sessionKey`，Camofox 自动从磁盘加载 profile，恢复已登录状态
 3. **定期刷新** — 对于 session-only Cookie 的站点，通过 cron 定期执行凭据登录刷新会话
 
@@ -191,7 +190,7 @@ Camofox 将浏览器状态保存到 `~/.camofox/profiles/<hash>/storage-state.js
 
 ### 18.6.4 从凭据管理系统读取登录信息
 
-Camofox 的登录凭据应通过第十五章描述的凭据管理系统获取：
+Camofox 的登录凭据应通过[第十五章](#ch:15)描述的凭据管理系统获取：
 
 ![Camofox 凭据获取流程](../diagrams/camofox-credential-flow.svg)
 

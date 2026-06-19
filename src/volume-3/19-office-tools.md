@@ -1,5 +1,4 @@
-# 第十九章：Office 工具与文档撰写
-\label{ch:19}
+# 第十九章：Office 工具与文档撰写 {#ch:19}
 
 ## 19.1 OfficeCLI：无头 Office 文档处理
 

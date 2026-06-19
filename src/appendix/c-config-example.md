@@ -1,5 +1,4 @@
-# 附录C：完整配置示例
-\label{appendix:c}
+# 附录C：完整配置示例 {#appendix:c}
 
 ## C.1 config.yaml 示例
 
@@ -86,7 +85,7 @@ mcp_servers:
 web:
  search_backend: searxng
  # extract_backend 仅在以下后端之一时有效: firecrawl, tavily, exa, parallel
- # SearXNG 是纯搜索后端，需配合 MarkItDown MCP 工具获取网页内容（见第十一章）
+ # SearXNG 是纯搜索后端，需配合 MarkItDown MCP 工具获取网页内容（[见第十一章](#ch:11)）
 
 plugins:
  hermes-memory-store:

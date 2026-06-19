@@ -344,6 +344,17 @@ function convert_mkdocs_admonition(para, next_block)
           else
             table.insert(current_line, "\226\128\156" .. qtext .. "\226\128\157")
           end
+        elseif item.t == "Link" then
+          -- Link element: [text](url) – preserve as \hyperref for internal anchors
+          local link_text = pandoc.utils.stringify(item)
+          local target = item.target or ""
+          if target:match("^#") then
+            -- Internal anchor: [第五章](#ch:5) → \hyperref[ch:5]{第五章}
+            table.insert(current_line, "\\hyperref[" .. target:sub(2) .. "]{" .. link_text .. "}")
+          else
+            -- External link: \href{url}{text}
+            table.insert(current_line, "\\href{" .. target .. "}{" .. link_text .. "}")
+          end
         elseif item.t == "RawInline" then
           -- Raw inline (could be HTML or other format)
           table.insert(current_line, item.text)

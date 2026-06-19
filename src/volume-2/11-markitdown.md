@@ -1,5 +1,4 @@
-# 第十一章：MarkItDown MCP 工具：文件格式转换与网页读取
-\label{ch:11}
+# 第十一章：MarkItDown MCP 工具：文件格式转换与网页读取 {#ch:11}
 
 ## 11.1 什么是 MarkItDown MCP？
 

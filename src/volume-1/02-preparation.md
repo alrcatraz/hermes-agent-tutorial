@@ -1,9 +1,8 @@
-# 第二章：安装前准备
-\label{ch:2}
+# 第二章：安装前准备 {#ch:2}
 
-Hermes Agent 支持 **Linux、macOS 和 Windows（WSL 2 或原生）**。如果你的电脑已经是 Linux，可以直接跳到\hyperref[ch:3]{第三章}开始安装。
+Hermes Agent 支持 **Linux、macOS 和 Windows（WSL 2 或原生）**。如果你的电脑已经是 Linux，可以直接跳到[第三章](#ch:3)开始安装。
 
-如果你用的是 **Windows**，有两种选择：通过 WSL 2 安装 Linux 子系统，或原生 Windows 安装。本章介绍 WSL 2 的配置方式；原生安装方式见\hyperref[ch:3]{第三章}。
+如果你用的是 **Windows**，有两种选择：通过 WSL 2 安装 Linux 子系统，或原生 Windows 安装。本章介绍 WSL 2 的配置方式；原生安装方式见[第三章](#ch:3)。
 
 ## 2.1 Windows 用户：启用 WSL 2
 

@@ -1,0 +1,20 @@
+digraph KBSQLite {
+  rankdir=TB;
+  splines=ortho;
+  ranksep=0.4;
+  nodesep=0.3;
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=10, margin=0.2];
+  edge [arrowhead=normal, arrowsize=0.7];
+
+  db [label="~/.astra/knowledge-base.db\n单文件 SQLite 数据库", fillcolor="#E3F2FD"];
+
+  { rank=same; registry; tables; fts5; }
+
+  registry [label="kb_registry\nKB 注册表\n(名/描述/启用状态)", fillcolor="#FFF3E0"];
+  tables [label="kb_{name}\n每个 KB 独立的\n数据表", fillcolor="#E8F5E9"];
+  fts5 [label="FTS5 索引\n全文搜索\n无需 pgvector", fillcolor="#F3E5F5"];
+
+  db -> registry;
+  db -> tables;
+  db -> fts5;
+}

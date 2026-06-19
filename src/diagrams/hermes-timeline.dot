@@ -1,0 +1,55 @@
+digraph HermesTimeline {
+  rankdir=TB;
+  splines=ortho;
+  ranksep=0.5;
+  nodesep=0.4;
+  node [shape=plaintext, fontname="sans-serif", fontsize=10];
+  edge [arrowhead=normal, arrowsize=0.6];
+
+  openclaw [label=<
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+      <tr><td bgcolor="#D4E6F1"><b>早期</b></td></tr>
+      <tr><td>OpenClaw 发布<br/>社区驱动的 AI Agent 框架</td></tr>
+    </table>
+  >];
+
+  fork2024 [label=<
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+      <tr><td bgcolor="#F0E6D4"><b>2024 年中期</b></td></tr>
+      <tr><td>Hermes Agent 分支<br/>Nous Research</td></tr>
+    </table>
+  >];
+
+  { rank=same; hermes; openclaw_now; }
+
+  hermes [label=<
+    <table border="0" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="left"><b>Hermes 团队专注：</b></td></tr>
+      <tr><td align="left">• 跨平台 Gateway</td></tr>
+      <tr><td align="left">• 持久记忆系统</td></tr>
+      <tr><td align="left">• 多 Provider 支持</td></tr>
+    </table>
+  >];
+
+  openclaw_now [label=<
+    <table border="0" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="left"><b>OpenClaw 团队专注：</b></td></tr>
+      <tr><td align="left">• 轻量级 CLI</td></tr>
+      <tr><td align="left">• 本地优先</td></tr>
+      <tr><td align="left">• 极简架构</td></tr>
+    </table>
+  >];
+
+  now_label [label=<
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+      <tr><td bgcolor="#E8F5E9"><b>现在</b></td></tr>
+      <tr><td>两个独立项目<br/>共享部分基因但走向不同方向</td></tr>
+    </table>
+  >];
+
+  openclaw -> fork2024 [arrowhead=none];
+  fork2024 -> hermes;
+  fork2024 -> openclaw_now;
+  hermes -> now_label [arrowhead=none, style=dashed];
+  openclaw_now -> now_label [arrowhead=none, style=dashed];
+}

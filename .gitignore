@@ -25,3 +25,11 @@ __pycache__/
 
 # ── OS ─────────────────────────────────────────────
 Thumbs.db
+
+# ── Docs build ─────────────────────────────────────
+build/
+luatex.*/
+test-*.aux
+test-*.log
+test-*.pdf
+test-*.out

@@ -44,58 +44,82 @@
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{mdframed}
+\usepackage{relsize}
+\usepackage{graphicx}
 
-%%% Colors — Godot-inspired clean light palette
+%%% Colors — Godot-inspired clean light palette (plus listings tango-style colors)
 \definecolor{primary}{HTML}{1A1A2E}
 \definecolor{accent}{HTML}{3465A4}
 \definecolor{accentlight}{HTML}{DEE5F2}
-\definecolor{linkcolor}{HTML}{3465A4}
 \definecolor{textmain}{HTML}{1A1A2E}
 \definecolor{textsec}{HTML}{555570}
 \definecolor{textmuted}{HTML}{8888A0}
 \definecolor{bordercolor}{HTML}{DCDCE6}
 \definecolor{codebg}{HTML}{E4E4E4}
 \definecolor{codeframe}{HTML}{E2E2EA}
-
-%%% Syntax highlighting colors (Godot-style)
-\definecolor{synkeyword}{HTML}{3465A4}
-\definecolor{synstring}{HTML}{4E9A06}
-\definecolor{syncomment}{HTML}{8888A0}
-\definecolor{synnumber}{HTML}{AD7FA8}
-\definecolor{syntype}{HTML}{C4A000}
-
-%%% Callout colors
 \definecolor{notebg}{HTML}{DEE5F2}
 \definecolor{noteborder}{HTML}{3465A4}
 \definecolor{tipbg}{HTML}{D5F5E3}
 \definecolor{tipborder}{HTML}{27AE60}
 \definecolor{warnbg}{HTML}{FEF5E7}
 \definecolor{warnborder}{HTML}{F39C12}
+\definecolor{dangerbg}{HTML}{FDEDEC}
+\definecolor{dangerborder}{HTML}{E74C3C}
+%%% Listings syntax colors (tango-inspired)
+\definecolor{lstkeyword}{HTML}{204A87}
+\definecolor{lststring}{HTML}{4E9A06}
+\definecolor{lstcomment}{HTML}{888A85}
+\definecolor{lstnumbert}{HTML}{AAAAAA}
+
+%%% Hyperlinks — black for print, still clickable
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=accent,
+}
+
+%%% Figure setup — force in-place [H] positioning, per-section numbering
+%%% Format: 图1.2-1 (section.figcounter with hyphen)
+\usepackage{float}
+\usepackage{caption}
+\numberwithin{figure}{section}
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\figurename}{图}
+\captionsetup[figure]{labelformat=simple, labelsep=space}
+\setlength{\textfloatsep}{8pt}
+\setlength{\intextsep}{8pt}
 
 %%% Page
 \geometry{a4paper, margin=2.2cm, headheight=14pt}
 \setstretch{1.1}
 
-%%% Title page — clean minimal, standalone cover, no author/date
+%%% Title page — clean minimal, standalone cover, with author/date/version
 \pretitle{%
   \thispagestyle{empty}
   \begin{center}\vspace*{4cm}
   \sffamily\huge\bfseries\color{primary}
 }
-\posttitle{\par\end{center}\newpage}
+\posttitle{%
+  \par
+  \vspace{1cm}
+  {\sffamily\large\color{textsec}作者: alrcatraz (\url{https://github.com/alrcatraz})}
+  \par\vspace{0.3em}
+  {\sffamily\large\color{textsec}日期: 2026-06-19}
+  \par\vspace{0.3em}
+  {\sffamily\large\color{textsec}版本: v2.0.0}
+  \end{center}
+  \newpage
+}
 \preauthor{}
 \postauthor{}
 \predate{}
 \postdate{}
 % Suppress empty author/date blocks from pandoc's title page
-% Force standalone cover page — after the title block, flush to new page
-% and reset page numbering for the body
 \AtBeginDocument{\AfterEndPreamble{%
   \gdef\thepage{\arabic{page}}%
 }}
 
 %%% Part page (volume divider) — standalone centered page
-% The article class already has \part, we just style it.
 \titleformat{\part}[display]
   {\newpage\thispagestyle{empty}\null\vfill\begin{center}}
   {}
@@ -104,37 +128,44 @@
   [\end{center}\vfill\clearpage]
 \titlespacing*{\part}{0pt}{0pt}{0pt}
 
-%%% Sections — clean hierarchy, each starts on new page
+%%% Sections — clean hierarchy, no auto-numbering (numbers are in heading text)
 \let\stdsection\section
 \renewcommand{\section}{\clearpage\stdsection}
 \titleformat{\section}
   {\sffamily\Large\bfseries\color{primary}}
-  {\thesection}{1em}{}
+  {}{0em}{}
 \titlespacing*{\section}{0pt}{2.5em}{0.5em}
 
 \titleformat{\subsection}
   {\sffamily\large\bfseries\color{primary}}
-  {\thesubsection}{1em}{}
+  {}{0em}{}
 \titlespacing*{\subsection}{0pt}{1.5em}{0.3em}
 
 \titleformat{\subsubsection}
   {\sffamily\normalsize\bfseries\color{primary}}
-  {\thesubsubsection}{1em}{}
+  {}{0em}{}
 \titlespacing*{\subsubsection}{0pt}{1em}{0.2em}
 
-%%% TOC — centered title, Chinese heading
+%%% TOC — centered title, black text
 \renewcommand{\contentsname}{目录}
 \renewcommand{\cfttoctitlefont}{\sffamily\Large\bfseries\color{primary}\hfill}
 \renewcommand{\cftaftertoctitle}{\hfill}
-\renewcommand{\cftsecfont}{\sffamily\color{primary}}
-\renewcommand{\cftsecfont}{\sffamily\color{primary}}
-\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsecfont}{\sffamily\normalsize\color{black}}
+\renewcommand{\cftsecpagefont}{\sffamily\normalsize\color{black}}
+\renewcommand{\cftpartfont}{\sffamily\large\bfseries\color{black}}
+\renewcommand{\cftpartpagefont}{\sffamily\large\color{black}}
+\renewcommand{\cftsubsecfont}{\sffamily\normalsize\color{black}}
 \setlength{\cftbeforesecskip}{0.3em}
+\setlength{\cftbeforepartskip}{0.8em}
+\setlength{\cftbeforetoctitleskip}{1.5em}
 
-%%% Code blocks — with line numbers, gray background, syntax highlighting
+%%% Code blocks — with line numbers, gray background, line wrapping
+%%% These settings apply to lstlisting environments (used with --listings flag)
 \lstset{
   language=bash,
   basicstyle=\small\ttfamily,
+  columns=flexible,
+  keepspaces=true,
   backgroundcolor=\color{codebg},
   frame=single,
   rulecolor=\color{codeframe},
@@ -144,86 +175,120 @@
   xleftmargin=0pt,
   xrightmargin=0pt,
   breaklines=true,
+  breakatwhitespace=false,
+  breakautoindent=false,
   tabsize=2,
   showstringspaces=false,
   numbers=left,
   numberstyle=\tiny\color{textmuted},
   numbersep=8pt,
   stepnumber=1,
-  keywordstyle=\color{synkeyword},
-  stringstyle=\color{synstring},
-  commentstyle=\color{syncomment},
-  numberstyle=\color{textmuted},
-  extendedchars=false,
+  extendedchars=true,
+  keywordstyle=\color{lstkeyword},
+  stringstyle=\color{lststring},
+  commentstyle=\color{lstcomment},
   aboveskip=8pt,
   belowskip=8pt,
 }
 
-%%% Callout boxes — Note, Tip, Warning
-% Note (blue)
+%%% Callout boxes — Note, Tip, Warning with full border
+%%% The header prefix (提示：/技巧：/注意：) is now output by the Lua filter
+%%% as a bold title line. These environments only set up the mdframed box.
+% Note (blue) — full border + background
 \newenvironment{note}{%
   \mdframed[
     backgroundcolor=notebg,
     linecolor=noteborder,
     linewidth=1.5pt,
     leftline=true,
-    rightline=false,
-    topline=false,
-    bottomline=false,
-    innertopmargin=6pt,
-    innerbottommargin=6pt,
+    rightline=true,
+    topline=true,
+    bottomline=true,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
     innerleftmargin=12pt,
-    innerrightmargin=6pt,
-    skipabove=8pt,
-    skipbelow=8pt,
-  ]
-  \small\sffamily\bfseries\color{noteborder} Note:\normalfont\color{textmain}\
-}{\endmdframed}
+    innerrightmargin=8pt,
+    skipabove=10pt,
+    skipbelow=10pt,
+  ]\small
+}{%
+  \endmdframed
+}
 
-% Tip (green)
+% Tip (green) — full border
 \newenvironment{tip}{%
   \mdframed[
     backgroundcolor=tipbg,
     linecolor=tipborder,
     linewidth=1.5pt,
     leftline=true,
-    rightline=false,
-    topline=false,
-    bottomline=false,
-    innertopmargin=6pt,
-    innerbottommargin=6pt,
+    rightline=true,
+    topline=true,
+    bottomline=true,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
     innerleftmargin=12pt,
-    innerrightmargin=6pt,
-    skipabove=8pt,
-    skipbelow=8pt,
-  ]
-  \small\sffamily\bfseries\color{tipborder} Tip:\normalfont\color{textmain}\
-}{\endmdframed}
+    innerrightmargin=8pt,
+    skipabove=10pt,
+    skipbelow=10pt,
+  ]\small
+}{%
+  \endmdframed
+}
 
-% Warning (orange)
+% Warning (orange) — full border
 \newenvironment{warning}{%
   \mdframed[
     backgroundcolor=warnbg,
     linecolor=warnborder,
     linewidth=1.5pt,
     leftline=true,
-    rightline=false,
-    topline=false,
-    bottomline=false,
-    innertopmargin=6pt,
-    innerbottommargin=6pt,
+    rightline=true,
+    topline=true,
+    bottomline=true,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
     innerleftmargin=12pt,
-    innerrightmargin=6pt,
-    skipabove=8pt,
-    skipbelow=8pt,
-  ]
-  \small\sffamily\bfseries\color{warnborder} Warning:\normalfont\color{textmain}\
-}{\endmdframed}
+    innerrightmargin=8pt,
+    skipabove=10pt,
+    skipbelow=10pt,
+  ]\small
+}{%
+  \endmdframed
+}
 
-%%% Inline code (backtick) — GitHub-style gray background
-%%% Applied via pandoc Lua filter: --lua-filter=inline-code-bg.lua
-\setlength{\fboxsep}{1.5pt}
-\newcommand{\icode}[1]{{\colorbox{codebg}{\texttt{#1}}}}
+% Danger (red) — full border
+\newenvironment{dangerbox}{%
+  \mdframed[
+    backgroundcolor=dangerbg,
+    linecolor=dangerborder,
+    linewidth=1.5pt,
+    leftline=true,
+    rightline=true,
+    topline=true,
+    bottomline=true,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
+    innerleftmargin=12pt,
+    innerrightmargin=8pt,
+    skipabove=10pt,
+    skipbelow=10pt,
+  ]\small
+}{%
+  \endmdframed
+}
+
+%%% Admonition body spacing
+
+%%% Admonition title — background fill with border color, white bold text
+\newcommand{\admonitiontitle}[2]{%
+  {\sffamily\bfseries\color{white}\colorbox{#1}{#2}}\\[4pt]%
+}
+
+%%% Inline code (backtick) — lua-ul gray background, BREAKABLE across lines
+\usepackage{luacolor}
+\usepackage{lua-ul}
+\newcommand{\icode}[1]{{\ttfamily\highLight[codebg]{#1}}}
 
 %%% Tables — modern, light, with alternating rows
 \usepackage{tabularx}
@@ -231,14 +296,11 @@
 \setlength{\tabcolsep}{5pt}
 \setlength{\abovetopsep}{2pt}
 \setlength{\belowbottomsep}{2pt}
-% Alternating row colors
 \rowcolors{2}{accentlight}{white}
-% Light border colors and modern rules
 \arrayrulecolor{bordercolor}
 \setlength{\heavyrulewidth}{0.6pt}
 \setlength{\lightrulewidth}{0.3pt}
 \setlength{\cmidrulewidth}{0.4pt}
-% Always use booktabs rules
 \AtBeginEnvironment{longtable}{%
   \footnotesize\setlength{\tabcolsep}{3pt}%
   \rowcolors{2}{accentlight}{white}%
@@ -249,13 +311,6 @@
 }
 \AtBeginEnvironment{tabularx}{\footnotesize\rowcolors{2}{accentlight}{white}}
 
-%%% Hyperlinks — blue, underlined
-\hypersetup{
-  colorlinks=true,
-  linkcolor=linkcolor,
-  urlcolor=linkcolor,
-}
-
 %%% Lists — compact
 \setlist{nosep, leftmargin=1.8em}
 
@@ -264,8 +319,12 @@
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{textsec}Hermes Agent 完全教程}
 \fancyhead[R]{\sffamily\footnotesize\color{textsec}\thepage}
+\fancyfoot[L]{\sffamily\footnotesize\color{textsec}Hermes Agent 完全教程}
+\fancyfoot[R]{\sffamily\footnotesize\color{textsec}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\headrule}{\color{bordercolor}\hrule}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footrule}{\color{bordercolor}\hrule}
 
 %%% Pandoc blockquotes → styled as callout
 \let\oldquote\quote

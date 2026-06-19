@@ -1,0 +1,18 @@
+digraph CamofoxHTTP {
+    rankdir=LR;
+    splines=ortho;
+    nodesep=0.5;
+    ranksep=0.6;
+    margin=0.1;
+    
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11, height=0.5];
+    
+    hermes [label="Hermes Agent", fillcolor="#DEE5F2", color="#3465A4"];
+    camofox [label="Camofox\n(port 9377)", fillcolor="#EDE5FF", color="#8B5CF6"];
+    camoufox [label="Camoufox\n(Firefox-based)", fillcolor="#E5FFE5", color="#22C55E"];
+    xvfb [label="Xvfb\n(virtual display)", fillcolor="#FFF5E5", color="#F59E0B"];
+    
+    hermes -> camofox [label="HTTP", fontsize=9];
+    camofox -> camoufox [label="Playwright", fontsize=9];
+    camofox -> xvfb [style=dashed, label="renders to", fontsize=9];
+}

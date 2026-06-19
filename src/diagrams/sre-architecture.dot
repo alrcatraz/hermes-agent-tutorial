@@ -1,0 +1,17 @@
+digraph SRE {
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.3;
+    ranksep=0.15;
+    margin=0.1;
+    
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11,
+          height=0.45, width=3.5, fillcolor="#DEE5F2", color="#3465A4"];
+    
+    daily [label="📊 cron: 每日巡检\nhealth-scan.py 遍历所有设备"];
+    watch [label="⏱️ cron: 分钟级看门狗\n核心服务状态 (Gateway, MCP)"];
+    event [label="🔧 事件驱动修复\nE2EE 修复, MCP 清理"];
+    monthly [label="📅 月维护窗口\n日志清理, 数据库 VACUUM"];
+    
+    daily -> watch -> event -> monthly;
+}

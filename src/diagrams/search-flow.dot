@@ -1,0 +1,21 @@
+digraph SearchFlow {
+    rankdir=LR;
+    splines=ortho;
+    nodesep=0.3;
+    ranksep=0.5;
+    margin=0.1;
+    
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11,
+          height=0.5];
+    
+    user [label="用户查询", fillcolor="#E5FFE5", color="#22C55E"];
+    searxng [label="SearXNG\n(search_backend)", fillcolor="#DEE5F2", color="#3465A4"];
+    result1 [label="返回:\n标题 + URL + 摘要", fillcolor="#F0F4FF", color="#3465A4"];
+    mcp [label="MarkItDown MCP\n(Agent 自主调用)", fillcolor="#EDE5FF", color="#8B5CF6"];
+    result2 [label="返回:\n完整 Markdown 内容", fillcolor="#F5F0FF", color="#8B5CF6"];
+    
+    user -> searxng;
+    searxng -> result1;
+    user -> mcp;
+    mcp -> result2;
+}

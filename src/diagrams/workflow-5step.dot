@@ -1,0 +1,25 @@
+digraph Workflow {
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.3;
+    ranksep=0.2;
+    margin=0.1;
+    
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11,
+          height=0.45, width=2.8];
+    
+    start [label="收到任务", fillcolor="#E5FFE5", color="#22C55E"];
+    step1 [label="① pre-action-research\n先查文档、搜方案", fillcolor="#DEE5F2", color="#3465A4"];
+    step2 [label="② change-safeguard\n备份、基线记录", fillcolor="#DEE5F2", color="#3465A4"];
+    step3 [label="③ 执行任务", fillcolor="#FFF5E5", color="#F59E0B"];
+    step4 [label="④ deploy-register\n部署后登记", fillcolor="#DEE5F2", color="#3465A4"];
+    step5 [label="⑤ work-closure-check\n收尾验证", fillcolor="#EDE5FF", color="#8B5CF6"];
+    end [label="完成", fillcolor="#E5FFE5", color="#22C55E"];
+    
+    start -> step1;
+    step1 -> step2;
+    step2 -> step3;
+    step3 -> step4;
+    step4 -> step5;
+    step5 -> end;
+}

@@ -1,0 +1,38 @@
+digraph KBDecisionTree {
+  rankdir=LR;
+  splines=ortho;
+  ranksep=0.6;
+  nodesep=0.2;
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+  edge [arrowhead=normal, arrowsize=0.6];
+
+  start [label="新信息", shape=doublecircle, fillcolor="#E3F2FD", fontsize=11, fontname="sans-serif-Bold", margin=0.3];
+
+  { rank=same; pref; skill; ref; env; temp; }
+
+  pref [label="用户偏好 /\n纠正的假设", fillcolor="#FFF3E0"];
+  skill [label="值得复用的流程、\n排查路径、修复步骤", fillcolor="#E8F5E9"];
+  ref [label="需要持久化查阅的\n参考文档、决策记录", fillcolor="#F3E5F5"];
+  env [label="稳定环境事实\n(路径、IP、工具链)", fillcolor="#FFECB3"];
+  temp [label="临时任务状态 /\ncommit SHA / 一次性输出", fillcolor="#FFCDD2"];
+
+  { rank=same; pref_dest; skill_dest; ref_dest; env_dest; temp_dest; }
+
+  pref_dest [label="→ Fact Store (user_pref)\n其次 memory", shape=note, style="filled,dashed", fillcolor="#FFF3E0"];
+  skill_dest [label="→ Skill\n(创建或 patch 对应 skill)", shape=note, style="filled,dashed", fillcolor="#E8F5E9"];
+  ref_dest [label="→ 知识库 MCP\n(kb_add)", shape=note, style="filled,dashed", fillcolor="#F3E5F5"];
+  env_dest [label="→ memory\n(陈述句格式)", shape=note, style="filled,dashed", fillcolor="#FFECB3"];
+  temp_dest [label="→ 不存任何地方", shape=note, style="filled,dashed", fillcolor="#F5F5F5"];
+
+  start -> pref;
+  start -> skill;
+  start -> ref;
+  start -> env;
+  start -> temp;
+
+  pref -> pref_dest;
+  skill -> skill_dest;
+  ref -> ref_dest;
+  env -> env_dest;
+  temp -> temp_dest;
+}

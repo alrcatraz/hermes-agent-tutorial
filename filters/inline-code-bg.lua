@@ -42,8 +42,16 @@ local function escape_tex(s)
   s = s:gsub(SOH_L, '\\{')
   s = s:gsub(SOH_R, '\\}')
 
-  -- 8) Allow line breaks after slashes in paths
+  -- 8) Allow line breaks after slashes, dots, and underscores in paths/identifiers
   s = s:gsub('/', '/\\allowbreak{}')
+  s = s:gsub('%.', '.\\allowbreak{}')
+  s = s:gsub('\\textunderscore%{%}', '\\textunderscore{}\\allowbreak{}')
+
+  -- 9) Allow line breaks after commas in JSON/data
+  s = s:gsub(',', ',\\allowbreak{}')
+
+  -- 10) Allow line breaks after escaped ampersand (&amp; → \\&)
+  s = s:gsub('\\&', '\\&\\allowbreak{}')
 
   return s
 end

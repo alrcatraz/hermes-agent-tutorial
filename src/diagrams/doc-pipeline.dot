@@ -1,0 +1,37 @@
+digraph DocPipeline {
+  rankdir=TB;
+  splines=ortho;
+  ranksep=0.4;
+  nodesep=0.3;
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+
+  subgraph cluster_source {
+    label="docs/ — 单一事实源";
+    style="filled,rounded";
+    fillcolor="#F5F5F5";
+    color="#999999";
+    fontsize=10;
+    fontname="sans-serif-Bold";
+    margin=14;
+
+    intro [label="introduction.md", fillcolor="#E3F2FD"];
+    v1 [label="volume-1/\n01-06 章", fillcolor="#FFF3E0"];
+    v2 [label="volume-2/\n07-12 章", fillcolor="#E8F5E9"];
+    v3 [label="volume-3/\n13-18 章", fillcolor="#F3E5F5"];
+    appx [label="appendix/\nA-D", fillcolor="#FFECB3"];
+  }
+
+  joint [label="", shape=point, width=0, height=0];
+
+  mkdocs [label="mkdocs build", fillcolor="#BBDEFB"];
+  site [label="site/\n(GitHub Pages)", fillcolor="#90CAF9"];
+
+  pandoc [label=<<b>pandoc</b><br/><font point-size="8">--pdf-engine=lualatex<br/>-H astra-doc-style.sty<br/>--listings + Lua filters</font>>, fillcolor="#C8E6C9"];
+  pdf [label="hermes-tutorial.pdf", fillcolor="#81C784"];
+
+  appx -> joint [arrowhead=none, style=dashed];
+  joint -> mkdocs;
+  joint -> pandoc;
+  mkdocs -> site;
+  pandoc -> pdf;
+}

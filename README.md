@@ -1,120 +1,119 @@
 ---
-version: 1.0.0
+version: 2.0.0
 ---
 
 # Hermes Agent Complete Tutorial
 
 <div align="center">
 
-[![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE) [![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial) [![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
+[![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE)
+[![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial)
+[![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
+[![Sponsor](https://img.shields.io/github/sponsors/alrcatraz?label=Sponsor&logo=github&color=ea4aaa&logoColor=white)](https://github.com/sponsors/alrcatraz)
+
+**Like this tutorial?** [Sponsor me on GitHub](https://github.com/sponsors/alrcatraz) — every bit supports more open-source documentation and tools. ❤️
 
 > From scratch installation · Quick start · Advanced configuration  
-> CC BY-SA 4.0 © 2026 [alrcatraz](https://github.com/alrcatraz)
+> CC BY-SA 4.0 (text) · MIT (code examples) © 2026 [alrcatraz](https://github.com/alrcatraz)
 
 </div>
 
 ---
 
-Hermes Agent is an open-source AI agent framework developed by **Nous Research**.
+**Hermes Agent** is an open-source AI agent framework developed by **Nous Research**.
 
-This tutorial takes you from zero to production, covering installation, configuration, and advanced tuning:
+This tutorial takes you from zero to production. Available as both a [web site](https://alrcatraz.github.io/hermes-agent-tutorial/) and a PDF:
 
-- **Volume I (Chapters 1–7)** — Beginner's guide, step-by-step installation and configuration
-- **Volume II (Chapters 8–14)** — Advanced configuration, multi-model collaboration, Gateway tuning
-- **Volume III (Chapters 15–21)** — Enterprise deployment, SRE operations, ecosystem integration
+- **Volume I — Basics (Chapters 1–6)** — Installation, initial configuration, Gateway setup, work principles
+- **Volume II — Intermediate (Chapters 7–12)** — Multi-model collaboration, external memory, SearXNG, MarkItDown, Agent customisation
+- **Volume III — Advanced (Chapters 13–20)** — Knowledge base, Skills, credential management, SRE, browser automation, Office tools
+- **Appendix** — Concepts reference, toolchain comparison, full config example, FAQ
 
-## Directory Structure
+It is the companion tutorial of the [Astra ecosystem](https://github.com/alrcatraz/astra-aiagent-infra).
+
+## Project Structure
 
 ```
 hermes-agent-tutorial/
-├── src/
-│   └── hermes-tutorial-combined.md   ← Tutorial source file
+├── src/                           ← Markdown source files
+│   ├── index.md                   ← Site home page
+│   ├── introduction.md            ← Standalone introduction
+│   ├── volume-1/                  ← 6 chapters
+│   ├── volume-2/                  ← 6 chapters
+│   ├── volume-3/                  ← 8 chapters
+│   ├── appendix/                  ← 4 appendix sections
+│   └── diagrams/                  ← Pre-rendered SVG diagrams
 ├── styles/
-│   └── astra-doc-style.sty          ← LaTeX styles
+│   └── astra-doc-style.sty        ← LaTeX styles (PDF)
 ├── filters/
-│   └── inline-code-bg.lua           ← Inline code rendering
-├── build/                           ← Compiled output (PDF)
-├── LICENSE                          ← CC BY-SA 4.0
+│   ├── admonitions.lua            ← Admonition blocks
+│   ├── inline-code-bg.lua         ← Inline code grey background
+│   └── diagram-path.lua           ← SVG path resolution
+├── .github/
+│   ├── FUNDING.yml                ← GitHub Sponsors
+│   └── workflows/
+│       └── deploy.yml             ← Auto-deploy to GitHub Pages
+├── mkdocs.yml                     ← MkDocs configuration
+├── Makefile                       ← Build both web & PDF
+├── LICENSE                        ← Dual license
 └── README.md
 ```
 
 ## Building
 
+### Web site
+
 ```bash
-cd src
-pandoc hermes-tutorial-combined.md \
-  --pdf-engine=xelatex \
-  --lua-filter=../filters/inline-code-bg.lua \
+# Serve locally (http://127.0.0.1:8000)
+uvx --with mkdocs-material mkdocs serve
+
+# Build to site/ directory
+uvx --with mkdocs-material mkdocs build
+```
+
+The GitHub Actions workflow in `.github/workflows/deploy.yml` automatically builds and deploys to GitHub Pages on every push to `main`.
+
+### PDF
+
+```bash
+make pdf
+# or manually:
+pandoc \
+  src/introduction.md \
+  src/volume-1/*.md \
+  src/volume-2/*.md \
+  src/volume-3/*.md \
+  src/appendix/*.md \
+  --pdf-engine=lualatex \
+  --listings \
+  --lua-filter=filters/admonitions.lua \
+  --lua-filter=filters/inline-code-bg.lua \
+  --lua-filter=filters/diagram-path.lua \
   --highlight-style=tango \
   -V colorlinks=true \
   -V geometry:margin=1in \
-  -H ../styles/astra-doc-style.sty \
-  -o ../build/hermes-agent-tutorial.pdf
+  -H styles/astra-doc-style.sty \
+  -o build/hermes-agent-tutorial.pdf
 ```
 
 ## Related
 
-- [astra-aiagent-infra](https://github.com/alrcatraz/astra-aiagent-infra) — ecosystem portal
+- [Astra AI Agent Infra](https://github.com/alcatraz/astra-aiagent-infra) — ecosystem portal & component registry
+- [Hermes Agent](https://hermes-agent.nousresearch.com/) — official documentation
 
 ## License
 
-This tutorial is licensed under **CC BY-SA 4.0** — you are free to share and adapt it, provided you give appropriate credit and share under the same licence.
+**Text content:** CC BY-SA 4.0 — share and adapt with attribution and share-alike.  
+**Code examples:** MIT — free to use in any project, no strings attached.
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alrcatraz/hermes-agent-tutorial&type=date" width="600" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alcatraz/hermes-agent-tutorial&type=date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alcatraz/hermes-agent-tutorial&type=date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alcatraz/hermes-agent-tutorial&type=date" width="600" />
   </picture>
 </div>
 
 ---
 
-## 中文版
-
-### Hermes Agent 完全教程
-
-Hermes Agent 是一个由 **Nous Research** 开发的开源 AI 代理框架。
-
-本教程带你从零基础开始，逐步走过安装、配置、到高级调优的完整路径：
-
-- **第一卷（第一～七章）** — 新手入门，手把手安装配置
-- **第二卷（第八～十四章）** — 进阶配置，多模型协作、Gateway 调优
-- **第三卷（第十五～二十一章）** — 企业级部署，SRE 运维、生态集成
-
-### 目录结构
-
-```
-hermes-agent-tutorial/
-├── src/
-│   └── hermes-tutorial-combined.md   ← 教程源文件
-├── styles/
-│   └── astra-doc-style.sty          ← LaTeX 样式
-├── filters/
-│   └── inline-code-bg.lua           ← 内联代码渲染
-├── build/                           ← 编译输出（PDF）
-├── LICENSE                          ← CC BY-SA 4.0
-└── README.md
-```
-
-### 编译
-
-```bash
-cd src
-pandoc hermes-tutorial-combined.md \
-  --pdf-engine=xelatex \
-  --lua-filter=../filters/inline-code-bg.lua \
-  --highlight-style=tango \
-  -V colorlinks=true \
-  -V geometry:margin=1in \
-  -H ../styles/astra-doc-style.sty \
-  -o ../build/hermes-agent-tutorial.pdf
-```
-
-### 许可证
-
-本教程采用 **CC BY-SA 4.0** 许可 —— 你可以自由分享和改编，但必须署名并以相同方式共享。
-
-### 依赖关系
-
-本教程内容完全原创，不依赖任何外部存储库。
+CC BY-SA 4.0 (text) · MIT (code examples) © 2026 [alcatraz](https://github.com/alcatraz)

@@ -1,0 +1,88 @@
+site_name: Hermes Agent 完全教程
+site_description: 从零安装 · 快速上手 · 高级配置
+site_url: https://alrcatraz.github.io/hermes-agent-tutorial/
+repo_url: https://github.com/alrcatraz/hermes-agent-tutorial
+edit_uri: blob/main/src/
+docs_dir: src
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换暗色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换亮色模式
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - content.code.annotate
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji
+  - toc:
+      permalink: true
+
+copyright: >
+  CC BY-SA 4.0 (正文) · MIT (代码示例) &copy; 2026
+  <a href="https://github.com/alrcatraz">alrcatraz</a>
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/alrcatraz
+    - icon: fontawesome/solid/heart
+      link: https://github.com/sponsors/alrcatraz
+
+nav:
+  - 首页: index.md
+  - 引言: introduction.md
+  - 第一卷 · 基础配置:
+    - volume-1/01-introduction.md
+    - volume-1/02-preparation.md
+    - volume-1/03-installation.md
+    - volume-1/04-initial-config.md
+    - volume-1/05-gateway.md
+    - volume-1/06-principles.md
+  - 第二卷 · 进阶设置:
+    - volume-2/07-multi-model.md
+    - volume-2/08-memory.md
+    - volume-2/09-gateway-interrupt.md
+    - volume-2/10-searxng.md
+    - volume-2/11-markitdown.md
+    - volume-2/12-agent-customization.md
+  - 第三卷 · 高级实战:
+    - volume-3/13-astra-intro.md
+    - volume-3/14-astra-hub.md
+    - volume-3/15-credentials.md
+    - volume-3/16-knowledge-base.md
+    - volume-3/17-skills.md
+    - volume-3/18-camofox.md
+    - volume-3/19-office-tools.md
+    - volume-3/20-sre.md
+  - 附录:
+    - appendix/a-concepts.md
+    - appendix/b-toolchain.md
+    - appendix/c-config-example.md
+    - appendix/d-faq.md

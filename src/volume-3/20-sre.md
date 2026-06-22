@@ -1,7 +1,7 @@
 # 第二十章：个人设备健康检测与自动维护（SRE） {#ch:20}
 
 !!! info "本章对应 Astra 生态组件"
-    - [`astra-sre`](https://github.com/alcatraz/astra-sre) — 统一 SRE 协调层
+    - [`astra-sre`](https://github.com/alrcatraz/astra-sre) — 统一 SRE 协调层
     - Service Inventory — 服务清单与健康检查
 
 ## 20.1 为什么需要个人 SRE？
@@ -20,10 +20,10 @@
 
 ## 20.3 设备清单管理
 
-Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/Documents/credentials/*.yaml.gpg` 文件读取（[见第十五章](#ch:15) §15.4 的系统二）：
+Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/.astra/credentials/*.yaml.gpg` 文件读取（[见第十五章](#ch:15) §15.4 的系统二）：
 
 ```yaml
-# ~/Projects/astra/astra-sre/config/devices.yaml.example
+# astra-sre/config/devices.yaml.example
 devices:
   - name: homeserver
     ssh: admin@10.0.1.10:2222
@@ -40,7 +40,7 @@ devices:
 ```
 
 !!! note "凭据分离原则"
-    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/Documents/credentials/*.yaml.gpg` 中（[见第十五章](#ch:15) §15.4）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
+    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/.astra/credentials/*.yaml.gpg` 中（[见第十五章](#ch:15) §15.4）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
 
 设备访问矩阵示例：
 
@@ -48,7 +48,7 @@ devices:
 
 ### 20.4.1 health-scan.py
 
-核心巡检脚本位于 `~/Projects/astra/astra-sre/scripts/health-scan.py`。一次运行 SSH 到所有配置设备，收集：
+核心巡检脚本位于 `astra-sre/scripts/health-scan.py`。一次运行 SSH 到所有配置设备，收集：
 
 - **磁盘使用率** — 阈值告警（默认 warn=85%, crit=92%）
 - **内存使用率** — 阈值告警（warn=80%, crit=92%）
@@ -56,13 +56,13 @@ devices:
 - **关键服务状态** — 可配置的 systemd 服务列表检查
 - **网络可达性** — ping 检查
 
-**凭据读取：** 巡检脚本通过 `~/Documents/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（[见第十五章](#ch:15) §15.4），不在脚本或配置文件内存储任何明文密码。
+**凭据读取：** 巡检脚本通过 `~/.astra/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（[见第十五章](#ch:15) §15.4），不在脚本或配置文件内存储任何明文密码。
 
 **运行方式：**
 
 ```bash
 # 进入仓库目录，使用 uv run 确保依赖隔离
-cd ~/Projects/astra/astra-sre
+cd astra-sre
 uv run python3 scripts/health-scan.py
 
 # 只输出摘要（适合快速浏览）
@@ -98,7 +98,7 @@ uv run python3 scripts/health-scan.py --output json
 | 名称 | `astra-sre 每日巡检` |
 | 调度 | `0 8 * * *`（每日 08:00 HKT） |
 | 模式 | `no_agent`（脚本 stdout 直接投递，无 LLM 中转） |
-| Workdir | `~/.astra/repos/astra-sre` |
+| Workdir | `astra-sre/`（仓库根目录） |
 | 投递目标 | Home room 📊 线程 |
 
 **关键设计决策 — 为什么用 `no_agent` 模式？**
@@ -110,7 +110,7 @@ uv run python3 scripts/health-scan.py --output json
 ```bash
 #!/bin/bash
 set -euo pipefail
-REPO_DIR="$HOME/.astra/repos/astra-sre"
+REPO_DIR="$HOME/astra-sre"
 cd "$REPO_DIR"
 unset VIRTUAL_ENV          # 防止 Hermes venv 泄漏到 uv
 exec uv run python3 scripts/health-scan.py
@@ -132,7 +132,7 @@ exec uv run python3 scripts/health-scan.py
 | 设备级 | astra-sre | 每天 08:00 | 磁盘、内存、负载、可达性 | `no_agent` |
 | 服务级 | service-inventory | 每小时 | MCP、API、数据库、Gateway | `no_agent`（正常时静默） |
 
-服务健康检查脚本 `healthcheck.py`（位于 `~/.hermes/skills/devops/service-inventory/scripts/`）检查以下服务：
+服务健康检查脚本 `healthcheck.py`（位于 `service-inventory/scripts/`）检查以下服务：
 
 | 服务 | 检查方式 | 预期状态 |
 |:-----|:---------|:---------|
@@ -150,7 +150,7 @@ exec uv run python3 scripts/health-scan.py
 每月 1 日运行的维护脚本 `astra-sre-refresh.sh`（`no_agent`，静默运行）：
 
 ```bash
-cd ~/Projects/astra/astra-sre
+cd astra-sre
 
 # 1. 刷新参考数据
 python3 scripts/kb_access.py --refresh
@@ -159,7 +159,7 @@ python3 scripts/kb_access.py --refresh
 python3 scripts/learn.py --cron
 
 # 3. 数据库 VACUUM（如果使用 SQLite）
-sqlite3 ~/.astra/knowledge-base.db "VACUUM;"
+sqlite3 /path/to/knowledge-base.db "VACUUM;"
 ```
 
 `learn.py --cron` 按 **"两次原则"** 工作：扫描 `sre_incidents` 知识库，寻找出现 2 次以上且缺少对应 sub-skill 的问题模式，自动生成 SKILL.md 模板建议。

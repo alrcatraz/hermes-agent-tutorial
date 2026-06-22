@@ -6,7 +6,7 @@ version: 2.0.0
 
 <div align="center">
 
-[![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE)
+[![License](https://img.shields.io/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE)
 [![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial)
 [![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
 [![Sponsor](https://img.shields.io/github/sponsors/alrcatraz?label=Sponsor&logo=github&color=ea4aaa&logoColor=white)](https://github.com/sponsors/alrcatraz)
@@ -104,7 +104,8 @@ pandoc \
 ## License
 
 **Text content:** CC BY-SA 4.0 — share and adapt with attribution and share-alike.  
-**Code examples:** MIT — free to use in any project, no strings attached.
+**Code examples:** MIT — free to use in any project, no strings attached.  
+Full dual-license details in [`LICENSE.DUAL.md`](LICENSE.DUAL.md).
 
 <div align="center">
   <picture>

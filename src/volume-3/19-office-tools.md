@@ -2,13 +2,13 @@
 
 ## 19.1 OfficeCLI：无头 Office 文档处理
 
-[OfficeCLI](https://github.com/alcatraz/OfficeCLI) 是一个单二进制工具，无需安装 Office 即可创建、读取和修改 `.docx`、`.xlsx`、`.pptx` 文件。
+[OfficeCLI](https://github.com/alrcatraz/OfficeCLI) 是一个单二进制工具，无需安装 Office 即可创建、读取和修改 `.docx`、`.xlsx`、`.pptx` 文件。
 
 ### 安装
 
 ```bash
 # 下载二进制
-curl -sLO https://github.com/alcatraz/OfficeCLI/releases/latest/download/officecli-linux-x64
+curl -sLO https://github.com/alrcatraz/OfficeCLI/releases/latest/download/officecli-linux-x64
 chmod +x officecli-linux-x64
 sudo mv officecli-linux-x64 /usr/local/bin/officecli
 ```

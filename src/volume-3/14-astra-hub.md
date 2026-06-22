@@ -24,7 +24,7 @@
 
 | 路径 | 内容 | 用途 |
 |:----|:------|:------|
-| `~/Projects/astra/<repo>/` | 公开代码 | 推送到 GitHub |
+| `~/astra/<repo>/` | 公开代码 | 推送到 GitHub |
 | `~/.astra/repos/<repo>/` | 私有副本（含个人数据覆盖层） | 本地运行，.gitignore 屏蔽个人配置 |
 
 ### 项目索引（截至 v2.0）

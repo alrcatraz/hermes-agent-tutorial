@@ -1,11 +1,11 @@
 # Hermes Agent 完全教程
 
-<div align="center">
+<div align="center" markdown="1">
 
 > 从零安装 · 快速上手 · 高级配置  
 > 三卷完整路线，带你成为 Hermes Agent 高手
 
-[![License](https://badgen.net/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE)
+[![License](https://img.shields.io/github/license/alrcatraz/hermes-agent-tutorial)](LICENSE)
 [![GitHub stars](https://badgen.net/github/stars/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial)
 [![GitHub last commit](https://badgen.net/github/last-commit/alrcatraz/hermes-agent-tutorial)](https://github.com/alrcatraz/hermes-agent-tutorial/commits)
 [![Sponsor](https://img.shields.io/github/sponsors/alrcatraz?label=Sponsor&logo=github&color=ea4aaa&logoColor=white)](https://github.com/sponsors/alrcatraz)

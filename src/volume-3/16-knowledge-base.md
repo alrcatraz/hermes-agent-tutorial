@@ -26,7 +26,7 @@ Astra 生态的 `astra-knowledge-base-mcp` 是一个轻量级知识库服务，�
 
 ```bash
 # 克隆仓库
-git clone https://github.com/alcatraz/astra-knowledge-base-mcp.git
+git clone https://github.com/alrcatraz/astra-knowledge-base-mcp.git
 cd astra-knowledge-base-mcp
 
 # 安装依赖
@@ -128,7 +128,7 @@ mcp_servers:
   astra-knowledge-base:
     command: uv run --directory /path/to/astra-knowledge-base-mcp server.py
     env:
-      ASTRA_KB_PATH: ~/.astra/knowledge-base.db
+      ASTRA_KB_PATH: /path/to/knowledge-base.db
     enabled: true
 ```
 

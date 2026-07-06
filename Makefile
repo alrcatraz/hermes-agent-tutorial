@@ -32,7 +32,7 @@ SRC := \
 	$(DOCS)/volume-3/15-credentials.md \
 	$(DOCS)/volume-3/16-knowledge-base.md \
 	$(DOCS)/volume-3/17-work-principles.md \
-	$(DOCS)/volume-3/18-plugins.md \
+	$(DOCS)/volume-3/18-context-anchor.md \
 	$(DOCS)/volume-3/19-markitdown-extract.md \
 	$(DOCS)/volume-3/20-camofox.md \
 	$(DOCS)/volume-3/21-office-tools.md \

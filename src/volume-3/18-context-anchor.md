@@ -50,12 +50,14 @@ Context Anchor 注册两个生命周期钩子：
 
 | 钩子 | 触发时机 | 职责 |
 |:-----|:---------|:-----|
-| `pre_llm_call` | 每次 LLM 调用前 | 读取 `state.json`，注入 `[AGENT CONTEXT]` 标头 |
+| `pre_llm_call` | 每次 LLM 调用前 | 读取 `context-anchor.json`，注入 `[AGENT CONTEXT]` 标头 |
 | `post_tool_call` | 每次工具调用后 | 记录会话 ID、检测 SSH 跳转、推断任务 |
 
 ![Context Anchor 架构](../diagrams/context-anchor.svg)
 
-### 18.3.2 状态文件：`state.json`
+### 18.3.2 状态文件：`context-anchor.json`
+
+Context Anchor 使用独立的 `context-anchor.json`，与 discipline 插件（`state.json`）互不干扰：
 
 ```json
 {

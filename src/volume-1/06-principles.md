@@ -67,7 +67,7 @@ hermes config get soul
 ## 6.4 延伸阅读
 
 - **执行流程**：[第17章](../volume-3/17-work-principles.md) 工作原则 Skill 体系
-- **Plugin 系统**：[第18章](../volume-3/18-plugins.md) Plugin 体系
+- **Plugin 系统**：[第18章](../volume-3/18-context-anchor.md) Context Anchor
 - **开发者指南**：[第23章](../volume-3/23-developer-guide.md) 开发者指南
 
 ---

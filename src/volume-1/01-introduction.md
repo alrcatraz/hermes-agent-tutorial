@@ -83,7 +83,7 @@ OpenClaw 是 Hermes Agent 的前身。Hermes Agent 最初是 OpenClaw 的一个*
 | 第二卷 | Agent 定制（SOUL 与 Personality） | [第12章](../volume-2/12-agent-customization.md#ch:12) |
 | 第三卷 | Astra 生态总览与 Hub 门户 | [第13章](../volume-3/13-astra-intro.md#ch:13)～[第14章](../volume-3/14-astra-hub.md#ch:14) |
 | 第三卷 | 登录凭据管理与知识库 | [第15章](../volume-3/15-credentials.md#ch:15)～[第16章](../volume-3/16-knowledge-base.md#ch:16) |
-| 第三卷 | 工作原则 Skill 体系与 Plugin 扩展 | [第17章](../volume-3/17-work-principles.md#ch:17)～[第18章](../volume-3/18-plugins.md#ch:18) |
+| 第三卷 | 工作原则 Skill 体系与 Plugin 扩展 | [第17章](../volume-3/17-work-principles.md#ch:17)～[第18章](../volume-3/18-context-anchor.md#ch:18) |
 | 第三卷 | MarkItDown 提取后端、Camofox 浏览器自动化 | [第19章](../volume-3/19-markitdown-extract.md#ch:19)～[第20章](../volume-3/20-camofox.md#ch:20) |
 | 第三卷 | Office 工具、SRE 个人运维 | [第21章](../volume-3/21-office-tools.md#ch:21)～[第22章](../volume-3/22-sre.md#ch:22) |
 | 第三卷 | **开发者指南**（Plugin 开发与生态贡献） | [第23章](../volume-3/23-developer-guide.md#ch:23) |

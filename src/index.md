@@ -56,12 +56,12 @@
 | [第15章：登录凭据管理](volume-3/15-credentials.md) | GPG 加密注入、KeePassXC | 安全 |
 | [第16章：知识库与信息分级储存](volume-3/16-knowledge-base.md) | MCP 知识库、三层存储架构 | 存储 |
 | [第17章：工作原则 Skill 体系](volume-3/17-work-principles.md) | SOUL→Plugin→Skill 执行管线 | 工程 |
-| [第18章：Plugin 体系（Context Anchor）](volume-3/18-plugins.md) | 跨会话上下文锚定 | 集成 |
+| [第18章：Context Anchor](volume-3/18-context-anchor.md) | 跨会话上下文锚定 | 集成 |
 | [第19章：MarkItDown 网页提取后端](volume-3/19-markitdown-extract.md) | 本地 MarkItDown MCP Plugin | 文档 |
 | [第20章：浏览器自动化与登录持久化（Camofox）](volume-3/20-camofox.md) | 电商价格监控、无头浏览器 | 自动化 |
 | [第21章：Office 工具与文档撰写](volume-3/21-office-tools.md) | OfficeCLI、TeX Live、Pandoc | 办公 |
 | [第22章：个人设备健康检测与自动维护（SRE）](volume-3/22-sre.md) | SRE 巡检、看门狗机制 | 运维 |
-| [第23章：开发者指南](volume-3/23-developer-guide.md) | Plugin 开发、生态贡献 | 开发 |
+| [第23章：开发者指南](volume-3/23-developer-guide.md) | Plugin 开发、lifecycle-sync、部署管线 | 开发 |
 
 ### 附录
 

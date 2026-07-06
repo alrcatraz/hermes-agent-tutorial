@@ -8,7 +8,8 @@
 
 # ── Python (remove section entirely if not Python) ─
 __pycache__/
-*.pyc
+*.py[cod]
+.codegraph/
 .venv/
 .python-version
 *.db

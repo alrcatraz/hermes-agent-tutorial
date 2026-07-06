@@ -31,10 +31,13 @@ SRC := \
 	$(DOCS)/volume-3/14-astra-hub.md \
 	$(DOCS)/volume-3/15-credentials.md \
 	$(DOCS)/volume-3/16-knowledge-base.md \
-	$(DOCS)/volume-3/17-skills.md \
-	$(DOCS)/volume-3/18-camofox.md \
-	$(DOCS)/volume-3/19-office-tools.md \
-	$(DOCS)/volume-3/20-sre.md \
+	$(DOCS)/volume-3/17-work-principles.md \
+	$(DOCS)/volume-3/18-plugins.md \
+	$(DOCS)/volume-3/19-markitdown-extract.md \
+	$(DOCS)/volume-3/20-camofox.md \
+	$(DOCS)/volume-3/21-office-tools.md \
+	$(DOCS)/volume-3/22-sre.md \
+	$(DOCS)/volume-3/23-developer-guide.md \
 	$(DOCS)/appendix/_divider.md \
 	$(DOCS)/appendix/a-concepts.md \
 	$(DOCS)/appendix/b-toolchain.md \
@@ -63,13 +66,13 @@ $(PDF): $(SRC)
 		--lua-filter=/home/alrcatraz/.hermes/templates/emoji-filter.lua \
 		--lua-filter=$(FILTERS)/admonitions.lua \
 		--lua-filter=$(FILTERS)/inline-code-bg.lua \
-	--lua-filter=$(FILTERS)/diagram-path.lua \
+		--lua-filter=$(FILTERS)/diagram-path.lua \
 		--highlight-style=tango \
 		-V colorlinks=true \
 		-V geometry:margin=1in \
 		-H $(STYLES)/astra-doc-style.sty \
 		-o $@
-	@echo "✅ PDF generated: $@"
+	@echo "PDF generated: $@"
 
 clean:
 	rm -rf $(OUTDIR)
@@ -80,7 +83,7 @@ diagrams:
 	@for dot in docs/diagrams/*.dot; do \
 		name=`basename "$$dot" .dot`; \
 		if command -v dot &>/dev/null; then \
-			dot -Tsvg "$$dot" -o "docs/diagrams/$$name.svg" && echo "  (local) $$name.svg" || echo "  ⚠️  $$name.svg failed"; \
+			dot -Tsvg "$$dot" -o "docs/diagrams/$$name.svg" && echo "  (local) $$name.svg" || echo "  !! $$name.svg failed"; \
 		else \
 			code=`cat "$$dot" | python3 -c "import sys,urllib.parse; print(urllib.parse.quote(sys.stdin.read()))"`; \
 			curl -sL -o "docs/diagrams/$$name.svg" -w "  %{http_code}" \
@@ -88,4 +91,4 @@ diagrams:
 			echo " $$name.svg"; \
 		fi; \
 	done
-	@echo "✅ Diagrams regenerated"
+	@echo "Diagrams regenerated"

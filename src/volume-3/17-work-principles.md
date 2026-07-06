@@ -40,28 +40,23 @@ work-principles 的 Plugin 系统位于 `astra-aiagent-infra/work-principles/plu
 
 | 插件 | 目录 | 职责 |
 |:-----|:-----|:-----|
-| **discipline** | `plugin/discipline/` | 阶段状态机（phase state machine）。`pre_llm_call` 注入阶段指引，`pre_tool_call` 拦截违规操作，`post_tool_call` 自动检测阶段转换。Agent 通过 `discipline_set_phase()` 声明阶段切换 |
-| **context-anchor** | `plugin/context-anchor/` | 会话上下文维护。自动注入 `[AGENT CONTEXT]` 头部（当前主机、任务、线程历史），`post_tool_call` 自动检测 SSH 跳转和任务变更 |
+| **discipline** | `plugin/discipline/` | 阶段状态机（phase state machine）。`pre_llm_call` 注入阶段指引，`pre_tool_call` 拦截违规操作，`post_tool_call` 自动检测阶段转换（`write_file`/`patch`→modifying，`web_search`/`skill_view`→task_started）。Agent 通过 `discipline_set_phase()` 声明阶段切换 |
+| **context-anchor** | `plugin/context-anchor/` | 会话上下文维护。自动注入 `[AGENT CONTEXT]` 头部（当前主机、任务、线程历史），`post_tool_call` 自动检测 SSH 跳转和任务变更。状态持久化在独立的 `context-anchor.json` 中，不与 discipline 共用文件 |
 
 ### 为什么需要 Plugin？
 
 Skills 是**按需加载**的（依赖系统提示词的 relevance matching），无法保证 Agent 在每轮对话中都主动加载。Plugin 的 lifecycle hooks（`pre_llm_call`、`pre_tool_call`、`post_tool_call`、`on_session_start`）在**每轮 LLM 调用**时触发，不依赖 Agent 的"记忆"，从架构层面确保原则被执行。
 
-### lifecycle-sync 与 LIFECYCLE_HOOKS
+### 状态持久化与跨会话安全
 
-`astra-lifecycle-sync` 是 `astra-aiagent-infra/lifecycle/` 下的同步工具。它读取 `registry.yaml` 中各组件声明的 lifecycle hooks，然后通过 `<!-- LIFECYCLE_HOOKS_BEGIN -->` / `<!-- LIFECYCLE_HOOKS_END -->` 标记注入到对应的 SKILL.md 文件中：
+两个插件各自维护独立的持久化状态文件，互不干扰：
 
-![lifecycle-sync 标记注入流程](../diagrams/lifecycle-sync-hooks.svg)
+| 插件 | 状态文件 | 关键字段 |
+|:-----|:---------|:---------|
+| **discipline** | `~/.hermes/persistent/state.json` | `phase`, `session_id`, `previous_phase` |
+| **context-anchor** | `~/.hermes/persistent/context-anchor.json` | `current_host`, `current_task`, `thread_session_ids` |
 
-这样，deploy-register 和 work-closure-check 的检查清单可以**从 registry 声明自动生成**，而非手动维护。运行 `python3 lifecycle/astra-lifecycle-sync.py --update` 即可同步。
-
-### 部署管线
-
-Plugin 和 Skill 的完整部署遵循"清洁 dev → 同步 → 私密运行时"原则：
-
-![Lifecycle-Sync 部署管线](../diagrams/lifecycle-sync.svg)
-
-核心原则：**dev copy 是干净的 git 工作树（可 push 到公开 GitHub），private copy 是运行时加载的目标（symlink 指向这里）。dev copy 中的修改通过 git push/pull 流向 private copy，再由 `lifecycle-sync` 确保 hooks 标记是最新的。**
+**跨会话安全机制：** discipline 在每次读取状态文件时自动检测 `session_id` 是否匹配当前会话。如果发现不匹配（如 Gateway 重启后残留了旧 session 的状态），自动重置到 `no_task` 初始阶段，避免状态"卡死"在错误的阶段。每次写入时也会同步更新 `session_id`，确保后续读取一致。
 
 ## 各 Skill 职责
 
@@ -130,18 +125,6 @@ ln -sfn ~/.astra/repos/astra-aiagent-infra/work-principles/skills/change-safegua
 # 6. 启用插件（需重启 session 生效）
 hermes plugins enable work-principles --allow-tool-override
 hermes plugins enable context-anchor
-```
-
-### 日常同步
-
-dev copy 修改后，同步到 private copy：
-
-```bash
-cd ~/Projects/astra/astra-aiagent-infra
-git push origin main                # push dev → GitHub
-cd ~/.astra/repos/astra-aiagent-infra
-git pull origin main                # pull GitHub → private
-python3 lifecycle/astra-lifecycle-sync.py --update   # 刷新 LIFECYCLE_HOOKS
 ```
 
 ---

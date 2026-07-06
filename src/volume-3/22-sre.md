@@ -1,10 +1,10 @@
-# 第二十章：个人设备健康检测与自动维护（SRE） {#ch:20}
+# 第22章：个人设备健康检测与自动维护（SRE） {#ch:22}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-sre`](https://github.com/alrcatraz/astra-sre) — 统一 SRE 协调层
     - Service Inventory — 服务清单与健康检查
 
-## 20.1 为什么需要个人 SRE？
+## 22.1 为什么需要个人 SRE？
 
 单机运维常常被忽视——出了问题再临时修复。Astra SRE 的思路是将**生产环境的可靠性实践**引入个人设备管理：
 
@@ -12,15 +12,15 @@
 - **看门狗机制**：核心服务实时监控
 - **自动修复**：常见故障自动处理
 
-## 20.2 SRE 的层次架构
+## 22.2 SRE 的层次架构
 
 ![Astra SRE 层次架构](../diagrams/sre-architecture.svg)
 
 ---
 
-## 20.3 设备清单管理
+## 22.3 设备清单管理
 
-Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/.astra/credentials/*.yaml.gpg` 文件读取（[见第十五章](#ch:15) §15.4 的系统二）：
+Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/.astra/credentials/*.yaml.gpg` 文件读取（[见第15章 §15.4](../volume-3/15-credentials.md#sec:15.4) 的系统二）：
 
 ```yaml
 # astra-sre/config/devices.yaml.example
@@ -40,11 +40,11 @@ devices:
 ```
 
 !!! note "凭据分离原则"
-    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/.astra/credentials/*.yaml.gpg` 中（[见第十五章](#ch:15) §15.4）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
+    `devices.yaml` 中仅配置 SSH 密钥路径（`key` 字段）和连接方式。SSH 密码和 sudo 密码存储在 `~/.astra/credentials/*.yaml.gpg` 中（[见第15章 §15.4](../volume-3/15-credentials.md#sec:15.4)）。health-scan.py 运行时从 GPG 加密的 credentials 文件中读取凭据。
 
 设备访问矩阵示例：
 
-## 20.4 每日健康巡检
+## 22.4 每日健康巡检
 
 ### 20.4.1 health-scan.py
 
@@ -56,7 +56,7 @@ devices:
 - **关键服务状态** — 可配置的 systemd 服务列表检查
 - **网络可达性** — ping 检查
 
-**凭据读取：** 巡检脚本通过 `~/.astra/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（[见第十五章](#ch:15) §15.4），不在脚本或配置文件内存储任何明文密码。
+**凭据读取：** 巡检脚本通过 `~/.astra/credentials/*.yaml.gpg` 读取 SSH 密码和 sudo 密码（[见第15章 §15.4](../volume-3/15-credentials.md#sec:15.4)），不在脚本或配置文件内存储任何明文密码。
 
 **运行方式：**
 
@@ -103,7 +103,7 @@ uv run python3 scripts/health-scan.py --output json
 
 **关键设计决策 — 为什么用 `no_agent` 模式？**
 
-原始 cron 是 LLM 驱动的（agent → `terminal()` → 脚本 → 管道 → LLM → 回复）。自 2026-06-20 起，每次运行均失败，根因是 `RuntimeError: [Errno 32] Broken pipe`——脚本执行期间（扫描多台设备），agent 的 stdout 管道超时关闭。转换为 `no_agent=true` 后，脚本作为独立子进程运行，stdout 直接投递，零 LLM 开销、零管道断裂风险。
+原始 cron 是 LLM 驱动的（agent → `terminal()` → 脚本 → 管道 → LLM → 回复）。脚本执行期间扫描多台设备，可能导致agent 的 stdout 管道超时关闭。设置 `no_agent=true` ，脚本作为独立子进程运行，stdout 直接投递，零 LLM 开销、零管道断裂风险。
 
 调用 wrapper 脚本 `~/.hermes/scripts/astra-sre-scan.sh`：
 
@@ -123,7 +123,7 @@ exec uv run python3 scripts/health-scan.py
 | 跑脚本 → 直接投递 stdout | `no_agent` | 纯机械任务，LLM 无增量价值 |
 | 汇总数据、决策报告内容 | `agent`（LLM 驱动） | 需要 LLM 判断力 |
 
-## 20.5 服务级健康检查（每小时）
+## 22.5 服务级健康检查（每小时）
 
 服务级健康检查由 `service-inventory` skill 管理，与 astra-sre 的**设备级**巡检是**不同层次**的监控：
 
@@ -132,7 +132,7 @@ exec uv run python3 scripts/health-scan.py
 | 设备级 | astra-sre | 每天 08:00 | 磁盘、内存、负载、可达性 | `no_agent` |
 | 服务级 | service-inventory | 每小时 | MCP、API、数据库、Gateway | `no_agent`（正常时静默） |
 
-服务健康检查脚本 `healthcheck.py`（位于 `service-inventory/scripts/`）检查以下服务：
+范例的服务健康检查脚本 `healthcheck.py`（位于 `service-inventory/scripts/`）检查以下服务：
 
 | 服务 | 检查方式 | 预期状态 |
 |:-----|:---------|:---------|
@@ -145,7 +145,7 @@ exec uv run python3 scripts/health-scan.py
 
 结果写入 `service_mgmt` 知识库，异常时通过 Gateway 发送通知。
 
-## 20.6 月度维护
+## 22.6 月度维护
 
 每月 1 日运行的维护脚本 `astra-sre-refresh.sh`（`no_agent`，静默运行）：
 
@@ -164,15 +164,7 @@ sqlite3 /path/to/knowledge-base.db "VACUUM;"
 
 `learn.py --cron` 按 **"两次原则"** 工作：扫描 `sre_incidents` 知识库，寻找出现 2 次以上且缺少对应 sub-skill 的问题模式，自动生成 SKILL.md 模板建议。
 
-已通过 learn.py 自动生成的 sub-skill：
-
-| Sub-skill | 级别 | 来源 |
-|:----------|:----:|:-----|
-| astra-sre-fix-gfw | L2 | 两次 GFW 事故后自动生成 |
-| astra-sre-fix-mcp | L2 | 两次 MCP 事故后自动生成 |
-| astra-sre-fix-vps-recovery | L2/L3 | 两次 VPS 恢复后自动生成 |
-
-## 20.7 分层修复机制
+## 22.7 分层修复机制
 
 Astra SRE 的修复操作按影响级别分为三层：
 
@@ -185,3 +177,5 @@ Astra SRE 的修复操作按影响级别分为三层：
 所有自动修复步骤都必须有 **验证探针**（verify probe），复用 `health-scan.py --json` 对比修复前后的状态。如果状态恶化 → 触发回滚或升级到 L3。
 
 **并发保护：** 使用锁文件 `/tmp/astra-sre-lock-<tag>.lock`（含 PID + 时间戳），通过 `kill -0 <PID>` 检测活锁。旧 PID 已死 → 自动清除（处理 SIGKILL / 崩溃残留）。按事故标签锁定，防止看门狗和诊断脚本互相踩踏。
+
+---

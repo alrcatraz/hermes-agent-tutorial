@@ -32,6 +32,7 @@ theme:
 
 markdown_extensions:
   - admonition
+  - attr_list
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tabbed:
@@ -78,10 +79,13 @@ nav:
     - volume-3/14-astra-hub.md
     - volume-3/15-credentials.md
     - volume-3/16-knowledge-base.md
-    - volume-3/17-skills.md
-    - volume-3/18-camofox.md
-    - volume-3/19-office-tools.md
-    - volume-3/20-sre.md
+    - volume-3/17-work-principles.md
+    - volume-3/18-plugins.md
+    - volume-3/19-markitdown-extract.md
+    - volume-3/20-camofox.md
+    - volume-3/21-office-tools.md
+    - volume-3/22-sre.md
+    - volume-3/23-developer-guide.md
   - 附录:
     - appendix/a-concepts.md
     - appendix/b-toolchain.md

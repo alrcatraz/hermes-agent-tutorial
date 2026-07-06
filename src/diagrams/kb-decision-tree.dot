@@ -1,38 +1,36 @@
 digraph KBDecisionTree {
-  rankdir=LR;
+  rankdir=TB;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=10;
+  nodesep=0.3;
+  ranksep=0.4;
   splines=ortho;
-  ranksep=0.6;
-  nodesep=0.2;
-  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
-  edge [arrowhead=normal, arrowsize=0.6];
 
-  start [label="新信息", shape=doublecircle, fillcolor="#E3F2FD", fontsize=11, fontname="sans-serif-Bold", margin=0.3];
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.12];
 
-  { rank=same; pref; skill; ref; env; temp; }
+  start [label="有新信息需要存储？", fillcolor="#E3F2FD", color="#1565C0", shape=diamond, fontsize=10];
 
-  pref [label="用户偏好 /\n纠正的假设", fillcolor="#FFF3E0"];
-  skill [label="值得复用的流程、\n排查路径、修复步骤", fillcolor="#E8F5E9"];
-  ref [label="需要持久化查阅的\n参考文档、决策记录", fillcolor="#F3E5F5"];
-  env [label="稳定环境事实\n(路径、IP、工具链)", fillcolor="#FFECB3"];
-  temp [label="临时任务状态 /\ncommit SHA / 一次性输出", fillcolor="#FFCDD2"];
+  question1 [label="属于哪一类？", fillcolor="#FFF8E1", color="#F9A825", shape=diamond, fontsize=9];
 
-  { rank=same; pref_dest; skill_dest; ref_dest; env_dest; temp_dest; }
+  dynamic [label="动态参考数据\nGateway 消息长度、Provider API、工具坑", fillcolor="#FFF3CD", color="#F9A825"];
+  config [label="Hermes 附加配置\nMCP 服务、CLI 工具、端口", fillcolor="#BBDEFB", color="#1565C0"];
+  mgmt [label="管理方案与维护日志\n健康检查方案、事件记录", fillcolor="#C8E6C9", color="#43A047"];
+  incident [label="SRE 事故记录\n根因分析、修复经验", fillcolor="#FFCDD2", color="#E53935"];
 
-  pref_dest [label="→ Fact Store (user_pref)\n其次 memory", shape=note, style="filled,dashed", fillcolor="#FFF3E0"];
-  skill_dest [label="→ Skill\n(创建或 patch 对应 skill)", shape=note, style="filled,dashed", fillcolor="#E8F5E9"];
-  ref_dest [label="→ 知识库 MCP\n(kb_add)", shape=note, style="filled,dashed", fillcolor="#F3E5F5"];
-  env_dest [label="→ memory\n(陈述句格式)", shape=note, style="filled,dashed", fillcolor="#FFECB3"];
-  temp_dest [label="→ 不存任何地方", shape=note, style="filled,dashed", fillcolor="#F5F5F5"];
+  kb_dynamic [label="dynamic_ref KB\ncron 定期刷新", fillcolor="#FFF3CD", color="#F9A825"];
+  kb_config [label="hermes_config KB\n部署时手动更新", fillcolor="#BBDEFB", color="#1565C0"];
+  kb_mgmt [label="service_mgmt KB\n运行时自动写入", fillcolor="#C8E6C9", color="#43A047"];
+  kb_incident [label="sre_incidents KB\n每次事故后记录", fillcolor="#FFCDD2", color="#E53935"];
 
-  start -> pref;
-  start -> skill;
-  start -> ref;
-  start -> env;
-  start -> temp;
+  start -> question1;
+  question1 -> dynamic [label="动态参考数据"];
+  question1 -> config [label="系统配置"];
+  question1 -> mgmt [label="管理方案"];
+  question1 -> incident [label="事故记录"];
 
-  pref -> pref_dest;
-  skill -> skill_dest;
-  ref -> ref_dest;
-  env -> env_dest;
-  temp -> temp_dest;
+  dynamic -> kb_dynamic;
+  config -> kb_config;
+  mgmt -> kb_mgmt;
+  incident -> kb_incident;
 }

@@ -1,37 +1,68 @@
 digraph DocPipeline {
   rankdir=TB;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=10;
+  nodesep=0.4;
+  ranksep=0.5;
   splines=ortho;
-  ranksep=0.4;
-  nodesep=0.3;
+
   node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
 
   subgraph cluster_source {
-    label="docs/ — 单一事实源";
+    label="Markdown 源码（src/）";
     style="filled,rounded";
-    fillcolor="#F5F5F5";
-    color="#999999";
-    fontsize=10;
-    fontname="sans-serif-Bold";
-    margin=14;
+    fillcolor="#E3F2FD";
+    color="#1565C0";
+    fontcolor="#0D47A1";
+    fontsize=9;
 
-    intro [label="introduction.md", fillcolor="#E3F2FD"];
-    v1 [label="volume-1/\n01-06 章", fillcolor="#FFF3E0"];
-    v2 [label="volume-2/\n07-12 章", fillcolor="#E8F5E9"];
-    v3 [label="volume-3/\n13-18 章", fillcolor="#F3E5F5"];
-    appx [label="appendix/\nA-D", fillcolor="#FFECB3"];
+    index [label="index.md\nintroduction.md", fillcolor="#BBDEFB"];
+    v1 [label="volume-1/\n（6 章）", fillcolor="#BBDEFB"];
+    v2 [label="volume-2/\n（6 章）", fillcolor="#BBDEFB"];
+    v3 [label="volume-3/\n（8 章）", fillcolor="#BBDEFB"];
+    appendix [label="appendix/\n（4 篇）", fillcolor="#BBDEFB"];
+    diagrams [label="diagrams/\n（SVG 图）", fillcolor="#BBDEFB"];
   }
 
-  joint [label="", shape=point, width=0, height=0];
+  split [label="同一套源码\n两条输出管线", fillcolor="#FFF8E1", color="#F9A825", shape=diamond, fontsize=10];
 
-  mkdocs [label="mkdocs build", fillcolor="#BBDEFB"];
-  site [label="site/\n(GitHub Pages)", fillcolor="#90CAF9"];
+  subgraph cluster_web {
+    label="Web 输出";
+    style="filled,rounded";
+    fillcolor="#F3E5F5";
+    color="#8B5CF6";
+    fontcolor="#6D28D9";
+    fontsize=9;
 
-  pandoc [label=<<b>pandoc</b><br/><font point-size="8">--pdf-engine=lualatex<br/>-H astra-doc-style.sty<br/>--listings + Lua filters</font>>, fillcolor="#C8E6C9"];
-  pdf [label="hermes-tutorial.pdf", fillcolor="#81C784"];
+    mkdocs [label="mkdocs-material\n（MkDocs 构建）", fillcolor="#E9D5FF"];
+    web [label="GitHub Pages\n（静态网站）", fillcolor="#D8B4FE"];
+  }
 
-  appx -> joint [arrowhead=none, style=dashed];
-  joint -> mkdocs;
-  joint -> pandoc;
-  mkdocs -> site;
-  pandoc -> pdf;
+  subgraph cluster_pdf {
+    label="PDF 输出";
+    style="filled,rounded";
+    fillcolor="#FFF8E1";
+    color="#F9A825";
+    fontcolor="#F57F17";
+    fontsize=9;
+
+    pandoc [label="Pandoc + Lua filters\n（admonitions / inline-code / \ndiagram-path）", fillcolor="#FFF3CD"];
+    latex [label="LuaLaTeX\n（astra-doc-style.sty）", fillcolor="#FFECB3"];
+    pdf [label="PDF 文档\n（build/hermes-agent-tutorial.pdf）", fillcolor="#FFE082"];
+  }
+
+  index -> split;
+  v1 -> split;
+  v2 -> split;
+  v3 -> split;
+  appendix -> split;
+  diagrams -> split;
+
+  split -> mkdocs [label=" mkdocs serve / build", fontsize=9];
+  mkdocs -> web [label=" 自动部署", fontsize=9];
+
+  split -> pandoc [label=" make pdf", fontsize=9];
+  pandoc -> latex [label=" lualatex 编译", fontsize=9];
+  latex -> pdf;
 }

@@ -1,0 +1,23 @@
+digraph LicycleSyncHooks {
+  rankdir=TB;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=11;
+  nodesep=0.3;
+  ranksep=0.4;
+  splines=ortho;
+
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=10, margin=0.15];
+
+  registry [label="registry.yaml\n（组件声明 lifecycle hooks）", fillcolor="#FFF8E1", color="#F9A825"];
+
+  sync [label="astra-lifecycle-sync.py", fillcolor="#FFF3E0", color="#E65100", penwidth=2];
+
+  closure [label="work-closure-check\n/SKILL.md\n（含 LIFECYCLE_HOOKS 标记）", fillcolor="#E8F5E9", color="#43A047"];
+
+  deploy [label="deploy-register\n/SKILL.md\n（含 LIFECYCLE_HOOKS 标记）", fillcolor="#E8F5E9", color="#43A047"];
+
+  registry -> sync [label=" 读取", fontsize=9];
+  sync -> closure [label=" 注入 closure hooks", fontsize=9];
+  sync -> deploy [label=" 注入 deploy hooks", fontsize=9];
+}

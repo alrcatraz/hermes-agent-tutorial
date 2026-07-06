@@ -1,0 +1,35 @@
+digraph LifecycleSync {
+  rankdir=TB;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=10;
+  nodesep=0.4;
+  ranksep=0.5;
+  splines=ortho;
+
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+
+  dev [label="开发副本\nregistry.yaml + skills/*/SKILL.md\n（无 LIFECYCLE 标记，可提交 GitHub）", fillcolor="#C8E6C9", color="#43A047"];
+
+  sync [label="lifecycle-sync.py\n读取 registry → 注入标记", fillcolor="#FFF3E0", color="#E65100"];
+
+  subgraph cluster_private {
+    label="私有副本（运行时使用）";
+    style="filled,rounded";
+    fillcolor="#E3F2FD";
+    color="#1565C0";
+    fontcolor="#0D47A1";
+    fontsize=9;
+
+    private_skills [label="skills/*/SKILL.md\n（含 LIFECYCLE_HOOKS 标记）", fillcolor="#BBDEFB"];
+    plugins [label="plugins/context-anchor/\nhooks.py | state.py", fillcolor="#BBDEFB"];
+  }
+
+  hermes [label="Hermes 运行时\n~/.hermes/ → symlink → 私有副本\n技能按需加载\nPlugin hook 自动执行", fillcolor="#F3E5F5", color="#8B5CF6"];
+
+  dev -> sync [label=" git push", fontsize=8];
+  sync -> private_skills [label=" 注入 LIFECYCLE_HOOKS", fontsize=8];
+  sync -> plugins [label=" 部署 plugin", fontsize=8, style=dashed];
+  private_skills -> hermes [label=" symlink", fontsize=8];
+  plugins -> hermes [label=" symlink + enable", fontsize=8];
+}

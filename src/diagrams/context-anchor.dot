@@ -1,0 +1,30 @@
+digraph ContextAnchor {
+  rankdir=LR;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=10;
+  nodesep=0.3;
+  ranksep=0.5;
+  splines=ortho;
+
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+
+  subgraph cluster_hooks {
+    label="Hermes 生命周期钩子";
+    style="filled,rounded";
+    fillcolor="#E3F2FD";
+    color="#1565C0";
+    fontcolor="#0D47A1";
+
+    pre [label="pre_llm_call\n读取 state.json\n→ 注入标头", fillcolor="#BBDEFB"];
+    post [label="post_tool_call\n→ 记录 session_id\n→ 推断 task\n→ 检测 SSH", fillcolor="#BBDEFB"];
+  }
+
+  state [label="state.json\n~/.hermes/persistent/\ncurrent_host\ncurrent_task\nthread_session_ids", fillcolor="#FFF3E0", color="#E65100"];
+
+  sysprompt [label="系统提示词\n[AGENT CONTEXT]\nhost=HomeCentre01\ntask=network-maintenance\n[THREAD HISTORY]\n3 sessions", fillcolor="#E8F5E9", color="#2E7D32"];
+
+  pre -> state [label=" 读取", style=dashed, fontsize=8];
+  post -> state [label=" 写入", style=dashed, fontsize=8];
+  pre -> sysprompt [label=" 修改后传给 LLM", fontsize=8];
+}

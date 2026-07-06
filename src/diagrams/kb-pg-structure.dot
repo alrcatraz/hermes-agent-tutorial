@@ -1,0 +1,24 @@
+digraph KBPG {
+  rankdir=TB;
+  splines=ortho;
+  ranksep=0.35;
+  nodesep=0.3;
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.1];
+  edge [arrowhead=normal, arrowsize=0.6];
+
+  pg [label="PostgreSQL 16\nastra_kb 数据库", fillcolor="#E3F2FD", fontsize=10];
+
+  schemas [label="每个 KB 独立 schema\nkb_{name}.chunks\n物理隔离\nDROP SCHEMA CASCADE", fillcolor="#FFF3E0"];
+
+  fts [label="全文搜索\ntsvector 列\nGENERATED ALWAYS AS\nGIN 索引", fillcolor="#E8F5E9"];
+
+  vector [label="向量搜索\nembed_vec vector(1024)\npgvector HNSW 索引\n余弦相似度", fillcolor="#F3E5F5"];
+
+  hybrid [label="hybrid 混合搜索\nFTS + vector 融合\n默认权重各 50%", fillcolor="#FFE0B2", shape=diamond];
+
+  pg -> schemas;
+  pg -> fts;
+  pg -> vector;
+  fts -> hybrid;
+  vector -> hybrid;
+}

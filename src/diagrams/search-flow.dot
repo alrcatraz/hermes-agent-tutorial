@@ -1,21 +1,59 @@
 digraph SearchFlow {
-    rankdir=LR;
-    splines=ortho;
-    nodesep=0.3;
-    ranksep=0.5;
-    margin=0.1;
-    
-    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11,
-          height=0.5];
-    
-    user [label="用户查询", fillcolor="#E5FFE5", color="#22C55E"];
-    searxng [label="SearXNG\n(search_backend)", fillcolor="#DEE5F2", color="#3465A4"];
-    result1 [label="返回:\n标题 + URL + 摘要", fillcolor="#F0F4FF", color="#3465A4"];
-    mcp [label="MarkItDown MCP\n(Agent 自主调用)", fillcolor="#EDE5FF", color="#8B5CF6"];
-    result2 [label="返回:\n完整 Markdown 内容", fillcolor="#F5F0FF", color="#8B5CF6"];
-    
-    user -> searxng;
-    searxng -> result1;
-    user -> mcp;
-    mcp -> result2;
+  rankdir=LR;
+  bgcolor="transparent";
+  fontname="sans-serif";
+  fontsize=10;
+  nodesep=0.4;
+  ranksep=0.6;
+  splines=ortho;
+
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+
+  agent [label="Hermes Agent\n（搜索需求）", fillcolor="#E9D5FF", color="#8B5CF6"];
+
+  subgraph cluster_search {
+    label="搜索层";
+    style="filled,rounded";
+    fillcolor="#FFF8E1";
+    color="#F9A825";
+    fontcolor="#F57F17";
+    fontsize=9;
+
+    searxng [label="SearXNG\n（元搜索引擎）\n搜索引擎聚合", fillcolor="#FFF3CD"];
+    upstream [label="上游搜索引擎\nDuckDuckGo / Bing / Brave / Google", fillcolor="#FFECB3"];
+  }
+
+  subgraph cluster_extract {
+    label="提取层（Plugin 替换）";
+    style="filled,rounded";
+    fillcolor="#E3F2FD";
+    color="#1565C0";
+    fontcolor="#0D47A1";
+    fontsize=9;
+
+    plugin [label="web-extract-markitdown\nPlugin\n（重写 web_extract 后端）", fillcolor="#BBDEFB"];
+    mcp [label="本地 MarkItDown MCP\nconvert_to_markdown( url )\n→ 完整网页 Markdown", fillcolor="#90CAF9"];
+  }
+
+  subgraph cluster_result {
+    label="Agent 获取的内容";
+    style="filled,rounded";
+    fillcolor="#E8F5E9";
+    color="#43A047";
+    fontcolor="#2E7D32";
+    fontsize=9;
+
+    search_result [label="搜索结果\n（标题 + URL + 摘要）", fillcolor="#C8E6C9"];
+    extract_result [label="完整网页内容\n（Markdown 全文）", fillcolor="#A5D6A7"];
+  }
+
+  agent -> searxng [label=" web_search( query )", fontsize=9];
+  searxng -> upstream [label=" 并行查询", fontsize=8];
+  upstream -> search_result [label=" 聚合结果", fontsize=8];
+  search_result -> agent [label=" 返回摘要列表", fontsize=9, style=dashed];
+
+  agent -> plugin [label=" web_extract( url )", fontsize=9, color="#E65100"];
+  plugin -> mcp [label=" 转发到 MCP", fontsize=8];
+  mcp -> extract_result [label=" 返回 Markdown", fontsize=8];
+  extract_result -> agent [label=" 纳入上下文", fontsize=9, style=dashed, color="#2E7D32"];
 }

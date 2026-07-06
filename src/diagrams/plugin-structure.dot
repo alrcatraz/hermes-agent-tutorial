@@ -1,0 +1,45 @@
+digraph PluginStructure {
+    rankdir=LR;
+    bgcolor="transparent";
+    fontname="sans-serif";
+    fontsize=12;
+    nodesep=0.6;
+    ranksep=0.8;
+
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=10];
+
+    subgraph cluster_plugin {
+        label="~/.hermes/plugins/<name>/";
+        style="filled,rounded";
+        fillcolor="#E3F2FD";
+        color="#1565C0";
+        fontcolor="#0D47A1";
+
+        files [label=<
+            <table border="0" cellborder="0" cellspacing="3" cellpadding="2">
+                <tr><td align="left"><b>plugin.yaml</b></td><td align="left">  清单文件</td></tr>
+                <tr><td align="left"><b>__init__.py</b></td><td align="left">  register(ctx)</td></tr>
+                <tr><td align="left"><b>hooks.py</b></td><td align="left">  生命周期钩子</td></tr>
+                <tr><td align="left"><b>schemas.py</b></td><td align="left">  工具 schema</td></tr>
+                <tr><td align="left"><b>tools.py</b></td><td align="left">  工具实现</td></tr>
+                <tr><td align="left"><b>state.py</b></td><td align="left">  状态持久化</td></tr>
+            </table>
+        >, shape=plain, fillcolor="transparent", color="transparent"];
+    }
+
+    subgraph cluster_hooks {
+        label="Hermes 生命周期钩子";
+        style="filled,rounded";
+        fillcolor="#FFF3E0";
+        color="#E65100";
+        fontcolor="#BF360C";
+
+        hooks [label=<
+            <table border="0" cellborder="0" cellspacing="3" cellpadding="2">
+                <tr><td align="left"><b>pre_llm_call</b></td><td align="left">  修改系统提示词</td></tr>
+                <tr><td align="left"><b>post_tool_call</b></td><td align="left">  记录 SSH / 更新状态</td></tr>
+                <tr><td align="left"><b>pre_tool_call</b></td><td align="left">  阻断违反原则的操作</td></tr>
+            </table>
+        >, shape=plain, fillcolor="transparent", color="transparent"];
+    }
+}

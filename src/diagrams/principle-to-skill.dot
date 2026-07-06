@@ -1,19 +1,45 @@
 digraph PrincipleFlow {
-    rankdir=LR;
+    rankdir=TB;
+    bgcolor="transparent";
+    fontname="sans-serif";
+    fontsize=12;
+    nodesep=0.5;
+    ranksep=0.5;
     splines=ortho;
-    nodesep=0.4;
-    ranksep=0.6;
-    margin=0.1;
-    
-    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11,
-          height=0.5];
-    
-    principle [label="原则 (抽象)", fillcolor="#FFF5E5", color="#F59E0B"];
-    skill [label="Skill (可重复流程)", fillcolor="#EDE5FF", color="#8B5CF6"];
-    auto [label="自动加载", fillcolor="#DEE5F2", color="#3465A4"];
-    exec [label="每次执行", fillcolor="#E5FFE5", color="#22C55E"];
-    
-    principle -> skill [label="封装为"];
-    skill -> auto [label="触发匹配"];
-    auto -> exec [label="注入上下文"];
+
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=11, margin=0.2];
+
+    soul [label=<
+        <table border="0" cellborder="0" cellspacing="2" cellpadding="3">
+            <tr><td><b>SOUL.md（宪法层）</b></td></tr>
+            <tr><td align="left">· #0 诚实优先</td></tr>
+            <tr><td align="left">· #1 研究先行</td></tr>
+            <tr><td align="left">· #2 理解权衡</td></tr>
+            <tr><td align="left">· #3 步骤透明</td></tr>
+            <tr><td align="left">· #4 先保全再改</td></tr>
+        </table>
+    >, shape=plain, fillcolor="#EDE5FF", color="#8B5CF6"];
+
+    plugin [label=<
+        <table border="0" cellborder="0" cellspacing="2" cellpadding="3">
+            <tr><td><b>Plugin 层（HOOK 层）</b></td></tr>
+            <tr><td align="left">· context-anchor — [AGENT CONTEXT]</td></tr>
+            <tr><td align="left">· discipline — 阶段状态机</td></tr>
+            <tr><td align="left">· lifecycle-sync — 注入生成块</td></tr>
+        </table>
+    >, shape=plain, fillcolor="#DEE5F2", color="#3465A4"];
+
+    skill [label=<
+        <table border="0" cellborder="0" cellspacing="2" cellpadding="3">
+            <tr><td><b>Skill 体系（执行层）</b></td></tr>
+            <tr><td align="left">· execution-framework — 任务分类路由</td></tr>
+            <tr><td align="left">· pre-action-research — #1 研究先行</td></tr>
+            <tr><td align="left">· change-safeguard — #4 先保全再改</td></tr>
+            <tr><td align="left">· deploy-register — 部署登记</td></tr>
+            <tr><td align="left">· work-closure-check — 收尾闭环</td></tr>
+        </table>
+    >, shape=plain, fillcolor="#DEE5F2", color="#3465A4"];
+
+    soul -> plugin [color="#8B5CF6", dir=none];
+    plugin -> skill [color="#3465A4", dir=none];
 }

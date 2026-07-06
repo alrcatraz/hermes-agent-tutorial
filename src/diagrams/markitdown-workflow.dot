@@ -1,25 +1,30 @@
-digraph MarkItDownWorkflow {
-  rankdir=LR;
-  splines=polyline;
-  nodesep=0.3;
-  ranksep=0.5;
-  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=10, margin=0.2];
-  edge [arrowhead=normal, arrowsize=0.7];
+digraph MarkitdownExtract {
+    rankdir=TB;
+    bgcolor="transparent";
+    fontname="sans-serif";
+    fontsize=10;
+    nodesep=0.3;
+    ranksep=0.4;
+    splines=ortho;
 
-  user [label="用户的请求\n「分析这篇文章」", shape=note, style=filled, fillcolor="#E3F2FD"];
+    node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.12];
 
-  search [label=<<b>web_search()</b><br/><font point-size="9">使用搜索后端搜索</font>>, fillcolor="#FFF3E0"];
-  search_result [label=<<font point-size="9"><i>返回: [{title, url, snippet}, …]</i></font>>, shape=note, style=dashed, fillcolor="#FFFDE7"];
+    web [label="web_extract(urls=[...])\nHermes 内置工具", fillcolor="#E3F2FD", color="#1565C0"];
 
-  convert [label=<<b>convert_to_markdown(url)</b><br/><font point-size="9">Agent 自主调用 MCP 工具</font>>, fillcolor="#E8F5E9"];
-  markdown [label=<<font point-size="9"><i>返回: 完整 Markdown 内容</i></font>>, shape=note, style=dashed, fillcolor="#F1F8E9"];
+    dispatch [label="ctx.dispatch_tool(...)\nPlugin 拦截并重定向", fillcolor="#FFF3E0", color="#E65100"];
 
-  analyze [label=<<b>Agent 分析内容</b><br/><font point-size="9">并回复用户</font>>, fillcolor="#F3E5F5"];
+    mcp [label="markitdown-mcp\nHermes 托管的 MCP 服务器", fillcolor="#E8F5E9", color="#43A047"];
 
-  user -> search;
-  search -> search_result;
-  search_result -> convert;
-  convert -> markdown;
-  markdown -> analyze;
-  analyze -> user [style=dashed, color=gray, label="回复", constraint=false];
+    library [label="Microsoft MarkItDown 库\nHTML → Markdown", fillcolor="#F3E5F5", color="#8B5CF6"];
+
+    ocr [label="GLM-4.6V-Flash OCR\n图片 / 扫描 PDF", fillcolor="#FCE4EC", color="#C62828", style="dashed, filled"];
+
+    output [label="返回 Markdown 文本\n替换 web_extract 结果", fillcolor="#E8F5E9", color="#2E7D32"];
+
+    web -> dispatch [color="#E65100"];
+    dispatch -> mcp [color="#43A047"];
+    mcp -> library [color="#8B5CF6", label=" HTML 内容", fontsize=8];
+    mcp -> ocr [color="#C62828", style=dashed, label=" 需 OCR", fontsize=8];
+    library -> output [color="#2E7D32"];
+    ocr -> output [color="#2E7D32"];
 }

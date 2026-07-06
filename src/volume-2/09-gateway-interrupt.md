@@ -1,4 +1,4 @@
-# 第九章：Gateway 会话打断配置 {#ch:9}
+# 第9章：Gateway 会话打断配置 {#ch:9}
 
 ## 9.1 什么是会话打断？
 
@@ -39,3 +39,5 @@ agent:
   gateway_notify_interval: 180    # 进度通知间隔
   gateway_auto_continue_freshness: 3600  # 自动继续的时限
 ```
+
+---

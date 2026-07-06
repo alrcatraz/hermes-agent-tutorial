@@ -1,4 +1,4 @@
-# 第十章：SearXNG 部署与搜索配置 {#ch:10}
+# 第10章：SearXNG 部署与搜索配置 {#ch:10}
 
 ## 10.1 什么是 SearXNG？
 
@@ -229,7 +229,7 @@ web:
 ```
 
 !!! note "提示"
-    SearXNG 是**纯搜索后端**，仅返回标题、URL 和摘要。如需提取网页完整内容，需配合支持 `web_extract` 的后端（见 §10.6）。
+    SearXNG 是**纯搜索后端**，仅返回标题、URL 和摘要。如需提取网页完整内容，需配合支持 `web_extract` 的后端（见 [§10.6](#sec:10.6)）。
 
 ### Hermes 支持的 Web 搜索后端
 
@@ -237,7 +237,7 @@ Hermes 官方支持以下八种 Web 搜索后端：
 
 | 后端 | 搜索 | 提取 | 部署方式 | 国内可用 | 适用场景 |
 |:-----|:----:|:----:|:--------|:--------:|:--------|
-| `searxng` | ✅ | ❌ | 自托管 Podman | ✅（选好上游） | **推荐**，隐私可控，免费 |
+| `searxng` | ✅ | ❌ | 自托管 | ✅（选好上游） | **推荐**，隐私可控，免费 |
 | `firecrawl` | ✅ | ✅ | API 服务 | 需代理 | 全功能：搜索 + 网页抓取 |
 | `tavily` | ✅ | ✅ | API 服务 | 需代理 | 生产环境，结构化结果 |
 | `exa` | ✅ | ✅ | API 服务 | 需代理 | 语义搜索 + 内容提取 |
@@ -247,7 +247,7 @@ Hermes 官方支持以下八种 Web 搜索后端：
 | `xai` | ✅ | ❌ | API 服务 | 需代理 | xAI 搜索集成 |
 
 !!! info "关键区别"
-    只有 `firecrawl`、`tavily`、`exa`、`parallel` 同时支持搜索和网页内容提取（`web_extract`）。其余后端（`searxng`、`brave`、`ddgs`、`xai`）仅提供搜索，无法提取完整网页内容。使用纯搜索后端时，可用 MarkItDown MCP 工具（[见第十一章](#ch:11)）独立提取网页内容。
+    只有 `firecrawl`、`tavily`、`exa`、`parallel` 同时支持搜索和网页内容提取（`web_extract`）。其余后端（`searxng`、`brave`、`ddgs`、`xai`）仅提供搜索，无法提取完整网页内容。使用纯搜索后端时，可用 MarkItDown MCP 工具（[见第11章](11-markitdown.md#ch:11)）独立提取网页内容。
 
 ## 10.5 常见问题
 
@@ -258,7 +258,7 @@ SearXNG 是**纯搜索后端**，只能返回标题、URL 和简介。
 如需提取完整网页内容，有以下选择：
 
 - 切换到同时支持搜索和提取的后端：`firecrawl`、`tavily`、`exa`、`parallel`
-- 保持 SearXNG 作为搜索后端，使用 MarkItDown MCP 工具（[见第十一章](#ch:11)）独立提取
+- 保持 SearXNG 作为搜索后端，通过启用 Plugin（例如 `web-extract-markitdown` Plugin）来自动处理网页提取——Plugin 会替换内置 `web_extract` 工具的后端，Agent 无需在对话中手动调用 MCP 工具（参考实现见 [§10.6](#sec:10.6)）
 
 ### 搜索失败/超时
 
@@ -292,7 +292,7 @@ curl -s http://127.0.0.2:8931/config | python3 -c \
  "import sys,json; c=json.load(sys.stdin); [print(e['name']) for e in c['engines'] if not e.get('disabled')]"
 ```
 
-## 10.6 Web 提取后端（Extract Backend）
+## 10.6 Web 提取后端（Extract Backend） {#sec:10.6}
 
 ### 搜索与提取的区别
 
@@ -326,20 +326,9 @@ web:
 | `parallel` | ✅ | 并行搜索 + 批量提取 |
 
 !!! note "提示"
-    Hermes 目前**不支持**自定义提取后端插件。如果你需要特殊的提取逻辑（如绕过 Cloudflare、渲染 JS 页面），需要自行搭建中间服务，或切换到 `firecrawl`（内置 JS 渲染）。
+    Hermes 支持通过 Plugin 自定义提取后端。你可以编写 Plugin 来替换 `web_extract` 工具的实现（例如使用 Jina Reader API、本地 MarkItDown MCP 服务等），无需依赖上述四个全功能后端。参考实现见[第19章](../volume-3/19-markitdown-extract.md)的 MarkItDown MCP 提取方案。
 
-### 纯搜索后端 + MCP 工具组合
-
-如果使用纯搜索后端（SearXNG、Brave、DDGS、xAI），可以通过 MarkItDown MCP
-工具（[见第十一章](#ch:11)）独立提取网页内容。这不是 `extract_backend` 配置，而是 Agent
-在对话中自主调用 `convert_to_markdown` 工具：
-
-![SearXNG 搜索与 MCP 提取流程](../diagrams/search-flow.svg)
-
-### 常见问题：提取 403/Cloudflare
-
-部分网站（如知乎、Medium）返回 403 或 Cloudflare 验证页面。这是
-反爬保护，提取后端无能为力。解决方案：
+如果你使用 Firecrawl 等后端，以下是常见问题和应对策略：
 
 1. **Firecrawl JS 渲染：** `firecrawl` 后端内置 JS 渲染，部分可绕过
 2. **代理访问：** 通过 SOCKS5/HTTP 代理访问目标网站

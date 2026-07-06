@@ -1,12 +1,12 @@
-# 第十四章：Astra Hub——生态门户 {#ch:14}
+# 第14章：Astra Hub——生态门户 {#ch:14}
 
 
 !!! info "关于 Astra 生态"
     本书开卷已对 Astra 生态做了总览。本章详细介绍生态门户——Astra Hub（`astra-aiagent-infra`）——作为统一索引、注册表和模板引擎的具体实现。它不包含业务逻辑，而是扮演三个角色：
 
-- **生态地图**：索引所有 astra-* 项目的位置、用途和关系
-- **技能注册表**：通过 `registry.yaml` 统一管理所有技能的版本和路径
-- **模板引擎**：提供项目模板和生命周期钩子，保证新组件的一致开局
+    - **生态地图**：索引所有 astra-* 项目的位置、用途和关系
+    - **技能注册表**：通过 `registry.yaml` 统一管理所有技能的版本和路径
+    - **模板引擎**：提供项目模板和生命周期钩子，保证新组件的一致开局
 
 ## 14.1 为什么需要门户？
 
@@ -26,23 +26,6 @@
 |:----|:------|:------|
 | `~/astra/<repo>/` | 公开代码 | 推送到 GitHub |
 | `~/.astra/repos/<repo>/` | 私有副本（含个人数据覆盖层） | 本地运行，.gitignore 屏蔽个人配置 |
-
-### 项目索引（截至 v2.0）
-
-| 项目 | GitHub | 说明 |
-|:----|:------:|:------|
-| **astra-sre** | ✅ | SRE 协调层：全设备巡检、健康检查、自动修复 |
-| **astra-knowledge-base-mcp** | ✅ | 基于 SQLite + FTS5 的知识库 MCP 服务 |
-| **astra-camofox-browser** | ✅ (fork) | 反检测浏览器自动化 |
-| **astra-aiagent-infra** | ✅ | 本门户本身 + 生命周期钩子 |
-| **astra-skill-execution-framework** | ✅ | 任务分类路由框架 |
-| **astra-skill-change-safeguard** | ✅ | 变更前安全检查 |
-| **astra-skill-deploy-register** | ✅ | 部署登记 |
-| **astra-skill-pre-action-research** | ✅ | 预研检查 |
-| **astra-skill-work-closure-check** | ✅ | 收尾闭环检查 |
-| **hermes-agent-tutorial** | ✅ | 本书本身 |
-
-> 所有项目均已公开至 GitHub：https://github.com/alrcatraz/
 
 ## 14.2 技能注册表
 
@@ -75,3 +58,5 @@ uv run python3 lifecycle/astra-lifecycle-sync.py --update
 ```
 
 所有 astra-* 组件及其能力均可通过门户仓库一站式查阅。
+
+---

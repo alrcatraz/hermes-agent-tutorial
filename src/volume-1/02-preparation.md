@@ -1,8 +1,8 @@
-# 第二章：安装前准备 {#ch:2}
+# 第2章：安装前准备 {#ch:2}
 
-Hermes Agent 支持 **Linux、macOS 和 Windows（WSL 2 或原生）**。如果你的电脑已经是 Linux，可以直接跳到[第三章](#ch:3)开始安装。
+Hermes Agent 支持 **Linux、macOS 和 Windows（WSL 2 或原生）**。如果你的电脑已经是 Linux，可以直接跳到[第3章](03-installation.md#ch:3)开始安装。
 
-如果你用的是 **Windows**，有两种选择：通过 WSL 2 安装 Linux 子系统，或原生 Windows 安装。本章介绍 WSL 2 的配置方式；原生安装方式见[第三章](#ch:3)。
+如果你用的是 **Windows**，有两种选择：通过 WSL 2 安装 Linux 子系统，或原生 Windows 安装。本章介绍 WSL 2 的配置方式；原生安装方式见[第3章](03-installation.md#ch:3)。
 
 ## 2.1 Windows 用户：启用 WSL 2
 
@@ -255,6 +255,18 @@ HuggingFace Inference Providers 可作为备用方案：
 - 环境变量名：`HF_TOKEN`
 - 端点：`https://router.huggingface.co/v1`（新端点）
 - 特点：免费用户每月 $0.10 额度
+
+#### Mistral（免费层级）
+
+Mistral 提供免费 API 额度，适合作为补充搜索或轻量任务的后备：
+
+- 注册：**console.mistral.ai** → 创建 API Key
+- 环境变量名：`MISTRAL_API_KEY`
+- 费用：**免费层级**（每日有请求数限制）
+- 端点：`https://api.mistral.ai/v1`
+- 特点：`mistral-small-latest` 免费可用，适合轻量推理
+
+
 
 ## 2.5 本章小结
 

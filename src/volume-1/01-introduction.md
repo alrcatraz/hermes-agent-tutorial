@@ -1,4 +1,4 @@
-# 第一章：认识 Hermes Agent {#ch:1}
+# 第1章：认识 Hermes Agent {#ch:1}
 
 ## 1.1 什么是 Hermes Agent？
 
@@ -73,15 +73,20 @@ OpenClaw 是 Hermes Agent 的前身。Hermes Agent 最初是 OpenClaw 的一个*
 
 | 层级 | 能力 | 对应章节 |
 |:-----|:-----|:---------|
-| 第一卷 | 运行命令、读写文件、搜索网络、编写代码 | [第二章](#ch:2)～[第五章](#ch:5) |
-| 第一卷 | Gateway 聊天平台配置与开机自启 | [第五章](#ch:5) |
-| 附录 | 核心概念速览（会话、工具、技能、记忆） | [附录A](#appendix:a) |
-| 第一卷 | 工作原则与偏好配置——理解 Agent 的行为准则 | [第六章](#ch:6) |
-| 第二卷 | 多模型协作（主模型 DeepSeek + 辅助模型 智谱 BigModel） | [第七章](#ch:7) |
-| 第二卷 | 跨会话持久记忆（Holographic Memory） | [第八章](#ch:8) |
-| 第二卷 | Gateway 打断行为控制 | [第九章](#ch:9) |
-| 第二卷 | 自托管搜索引擎 SearXNG 部署 | [第十章](#ch:10) |
-| 第二卷 | MarkItDown MCP —— 网页提取与文档分析 | [第十一章](#ch:11) |
-| 附录 | 完整配置示例 | [附录C](#appendix:c) |
+| 第一卷 | 运行命令、读写文件、搜索网络、编写代码 | [第2章](02-preparation.md#ch:2)～[第5章](05-gateway.md#ch:5) |
+| 第一卷 | Gateway 聊天平台配置与开机自启 | [第5章](05-gateway.md#ch:5) |
+| 第二卷 | 多模型协作（主模型 + 辅助模型编排） | [第7章](../volume-2/07-multi-model.md#ch:7) |
+| 第二卷 | 跨会话持久记忆和深度实体推理 | [第8章](../volume-2/08-memory.md#ch:8) |
+| 第二卷 | Gateway 打断行为控制 | [第9章](../volume-2/09-gateway-interrupt.md#ch:9) |
+| 第二卷 | 自托管搜索引擎 SearXNG 部署 | [第10章](../volume-2/10-searxng.md#ch:10) |
+| 第二卷 | MarkItDown MCP — 文档分析与网页提取 | [第11章](../volume-2/11-markitdown.md#ch:11) |
+| 第二卷 | Agent 定制（SOUL 与 Personality） | [第12章](../volume-2/12-agent-customization.md#ch:12) |
+| 第三卷 | Astra 生态总览与 Hub 门户 | [第13章](../volume-3/13-astra-intro.md#ch:13)～[第14章](../volume-3/14-astra-hub.md#ch:14) |
+| 第三卷 | 登录凭据管理与知识库 | [第15章](../volume-3/15-credentials.md#ch:15)～[第16章](../volume-3/16-knowledge-base.md#ch:16) |
+| 第三卷 | 工作原则 Skill 体系与 Plugin 扩展 | [第17章](../volume-3/17-work-principles.md#ch:17)～[第18章](../volume-3/18-plugins.md#ch:18) |
+| 第三卷 | MarkItDown 提取后端、Camofox 浏览器自动化 | [第19章](../volume-3/19-markitdown-extract.md#ch:19)～[第20章](../volume-3/20-camofox.md#ch:20) |
+| 第三卷 | Office 工具、SRE 个人运维 | [第21章](../volume-3/21-office-tools.md#ch:21)～[第22章](../volume-3/22-sre.md#ch:22) |
+| 第三卷 | **开发者指南**（Plugin 开发与生态贡献） | [第23章](../volume-3/23-developer-guide.md#ch:23) |
+| 附录 | 核心概念速览、工具链、配置示例、FAQ | [附录A](../appendix/a-concepts.md#appendix:a)～[附录D](../appendix/d-faq.md#appendix:d) |
 
 ---

@@ -1,4 +1,4 @@
-# 第十二章：Agent 定制（SOUL 与 Personality） {#ch:12}
+# 第12章：Agent 定制（SOUL 与 Personality） {#ch:12}
 
 ## 12.1 配置即身份
 
@@ -9,34 +9,37 @@ Hermes Agent 的个性塑造来自两个层次：
 
 ## 12.2 SOUL 文件
 
-SOUL 文件是 Hermes Agent 的“宪法”，定义了：
-
-- Agent 的身份名称和定位
-- 工作原则（先保全再改、诚实优先等）
-- 安全准则
-- 质量标准
-
-SOUL 文件通常位于 `~/.hermes/SOUL.md`，每次新会话时自动加载。
+SOUL 文件定义了 Agent 的身份、语气。与普通 Prompt 不同，SOUL 在**每个会话启动时无条件注入**。
 
 ## 12.3 Personality 风格
 
 Hermes 内置了多种 personality：
 
-| 名称 | 风格 | 适用场景 |
-|:----|:----|:--------|
-| `mentor` | 亦师亦友，活泼可爱 + 认真分享 | 个人助手（推荐） |
-| `helpful` | 友好助手 | 通用场景 |
-| `concise` | 简洁直接 | 高效问答 |
-| `technical` | 技术专家风格 | 技术文档与排错 |
-| `hacker` | —— | 系统管理 |
-| `kawaii` | 萌系风格 | 日常聊天 |
+| 名称 | 风格 | 类别 |
+|:----|:----|:----|
+| `helpful` | 友好助手 | 基础 |
+| `concise` | 简洁直接 | 基础 |
+| `technical` | 技术专家风格 | 基础 |
+| `creative` | 创意发散 | 基础 |
+| `teacher` | 教师讲解 | 基础 |
+| `noir` | 黑色电影侦探 | 角色扮演 |
+| `philosopher` | 哲人思辨 | 角色扮演 |
+| `pirate` | 海盗口吻 | 角色扮演 |
+| `shakespeare` | 莎士比亚戏剧腔 | 角色扮演 |
+| `surfer` | 冲浪者腔调 | 角色扮演 |
+| `kawaii` | 日系萌系 | 趣味 |
+| `catgirl` | 猫娘口吻 | 趣味 |
+| `uwu` | uwu 语癖 | 趣味 |
+| `hype` | 高能激燃 | 趣味 |
+
+> **注意**：`mentor` 是用户通过 `config.yaml` 自定义的 personality，**不是** Hermes 内置的。上表列出的是 Hermes 原生的 14 种内置 personality，`mentor` 等自定义 personality 的配置方法见 [12.4 节](#12.4)。
 
 ```bash
 # 切换 personality
 hermes config set display.personality mentor
 ```
 
-## 12.4 自定义 Personality
+## 12.4 自定义 Personality {#12.4}
 
 你可以在 `config.yaml` 的 `display.personalities` 段添加新的人格：
 
@@ -46,3 +49,5 @@ agent:
     custom-name: |
       You are a pirate who speaks like a buccaneer...
 ```
+
+---

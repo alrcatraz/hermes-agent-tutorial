@@ -1,4 +1,4 @@
-# 第七章：多模型协作配置 {#ch:7}
+# 第7章：多模型协作配置 {#ch:7}
 
 ## 7.1 架构思路
 
@@ -44,14 +44,6 @@ GLM_API_KEY=your_zhipu_api_key_here
 
 !!! note "提示"
     Hermes 内置了 BigModel/Z.AI provider。`GLM_API_KEY` 是自动识别的环境变量名，无需手动配置 `base_url`。
-
-### HuggingFace 作为备用（可选）
-
-如果希望保留 HuggingFace Inference Providers 作为备用方案：
-
-```bash
-HF_TOKEN=hf_your_huggingface_token_here
-```
 
 ## 7.3 配置主模型
 
@@ -122,9 +114,6 @@ hermes config set auxiliary.profile_describer.model "GLM-4.7-Flash"
 hermes config set auxiliary.curator.provider "deepseek"
 hermes config set auxiliary.curator.model "deepseek-v4-pro"
 ```
-
-!!! warning "注意"
-    `zai` 是 Hermes 内置 provider，会自动读取 `GLM_API_KEY` 环境变量。**不要**在辅助任务中显式设置 `base_url` 和 `api_key`，否则会覆盖内置 provider 的默认配置，导致 401 认证失败。
 
 ## 7.6 智谱 BigModel 免费模型一览
 

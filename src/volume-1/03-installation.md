@@ -1,4 +1,4 @@
-# 第三章：安装 Hermes Agent {#ch:3}
+# 第3章：安装 Hermes Agent {#ch:3}
 
 ## 3.1 三种安装方式对比
 
@@ -97,20 +97,22 @@ curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scri
 
 Windows 用户有两种方式运行 Hermes——通过 WSL 2 装 Linux 或直接原生安装。
 
-### WSL 2 安装（推荐，功能最完整）
+### Windows 原生安装（推荐）
 
-在 WSL 2 终端中运行 3.2 节的 curl 命令即可。WSL 提供完整的 Linux/POSIX 环境，所有功能都能正常使用。
-
-### Windows 原生安装（推荐给想最快跑起来的用户）
-
-Hermes 支持 Windows 原生运行——CLI、Gateway、TUI 和工具均原生工作：
+Hermes 支持 Windows 原生运行——CLI、Gateway、TUI 和工具均原生工作，推荐大多数用户选择：
 
 ```powershell
 iex (irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1)
 ```
 
 安装器自动处理：`uv`、Python 3.11、Node.js 22、ripgrep、ffmpeg、PortableGit。
-数据目录在 `%LOCALAPPDATA%\hermes`。
+数据目录在 `%LOCALAPPDATA%\\hermes`。
+
+原生安装还提供 GUI 界面（使用 Hermes Desktop）和 Computer Use 工具集成，开箱即用体验更好。
+
+### WSL 2 安装（备选，适合需要完整 POSIX 环境的用户）
+
+在 WSL 2 终端中运行 3.2 节的 curl 命令即可。WSL 提供完整的 Linux/POSIX 环境，所有功能都能正常使用。
 
 ### 对比
 
@@ -148,16 +150,20 @@ hermes doctor
 
 健康输出类似：
 
+
+
 ```
-Hermes CLI          v0.15.1
-Python              3.11.10
-Linux kernel        ok
-Terminal backend    local
-Provider: DeepSeek  API key not set
-Tool: web           ok
-Tool: file          ok
-Tool: terminal      ok
-...
+Hermes CLI              v0.18.3
+Python                  3.11.15
+Linux kernel            6.7.0
+Terminal backend        local
+Provider: DeepSeek      ok
+Provider: Z.AI          ok
+Tool: web               ok
+Tool: file              ok
+Tool: terminal          ok
+Tool: cronjob           ok
+Holographic Memory      enabled (190 facts)
 ```
 
 !!! note "提示"

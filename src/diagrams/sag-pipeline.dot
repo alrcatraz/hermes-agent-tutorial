@@ -1,0 +1,29 @@
+digraph SAGPipeline {
+    rankdir=TB;
+    node [fontname="sans-serif" fontsize=9 shape=box style="filled,rounded"];
+    edge [fontname="sans-serif" fontsize=8];
+
+    subgraph cluster_index {
+        label="索引阶段"; style=filled; fillcolor="#f5f5f5"; color="#9e9e9e";
+        docs [label="文档"];
+        chunk [label="chunks\n（分块）"];
+        extract [label="每 chunk 提取\n1 事件 + 最多 11 类实体" fillcolor="#e3f2fd" color="#1565c0"];
+        sql_idx [label="events & entities\n写入 SQL + 向量索引" fillcolor="#e3f2fd" color="#1565c0"];
+        docs -> chunk -> extract -> sql_idx;
+    }
+
+    subgraph cluster_query {
+        label="查询阶段"; style=filled; fillcolor="#f5f5f5"; color="#9e9e9e";
+        query [label="用户查询"];
+        llm_extract [label="LLM 从查询中提取实体" fillcolor="#fff3e0" color="#e65100"];
+        vec_search [label="实体向量相似搜索\n（语义扩展，阈值 0.9）" fillcolor="#fff3e0" color="#e65100"];
+        join1 [label="SQL JOIN\nentities 到 event_entities 到 events\n（种子，top-50）" fillcolor="#e8f5e9" color="#2e7d32"];
+        join2 [label="SQL JOIN\n通过共享实体跳跃\n（1 跳默认，动态超边）" fillcolor="#e8f5e9" color="#2e7d32"];
+        rank1 [label="向量粗排（top-100）" fillcolor="#e8f5e9" color="#2e7d32"];
+        llm_rerank [label="[可选] LLM 重排\n（top-Kevent=5）" fillcolor="#f3e5f5" color="#7b1fa2"];
+        direct [label="合并直接的 chunk 向量结果\n（top-Kdirect=5）" fillcolor="#f3e5f5" color="#7b1fa2"];
+        output [label="去重输出" shape=ellipse style=filled fillcolor="#c8e6c9" color="#2e7d32"];
+
+        query -> llm_extract -> vec_search -> join1 -> join2 -> rank1 -> llm_rerank -> direct -> output;
+    }
+}

@@ -1,0 +1,41 @@
+digraph RAGFlow {
+    rankdir=TB;
+    nodesep=0.5;
+    ranksep=0.7;
+    node [fontname="sans-serif" fontsize=10 shape=box style="filled,rounded" fillcolor="#e3f2fd" color="#1565c0"];
+    edge [fontname="sans-serif" fontsize=9];
+
+    // ─── Row 1 ─────────────────────────────────────────────
+    subgraph cluster_row1 {
+        label="阶段一：查询向量化";
+        style=filled; fillcolor="#f5f5f5"; color="#9e9e9e"; fontcolor="#616161";
+        embed [label="向量化查询文本\n(embedding)"];
+    }
+
+    // ─── Row 2 ─────────────────────────────────────────────
+    subgraph cluster_row2 {
+        label="阶段二：向量检索";
+        style=filled; fillcolor="#f5f5f5"; color="#9e9e9e"; fontcolor="#616161";
+        vecsearch [label="向量相似度搜索\n(vector DB)"];
+        topk      [label="检索 Top-K\n相关文档块"];
+        vecsearch -> topk;
+    }
+
+    // ─── Row 3 ─────────────────────────────────────────────
+    subgraph cluster_row3 {
+        label="阶段三：生成";
+        style=filled; fillcolor="#f5f5f5"; color="#9e9e9e"; fontcolor="#616161";
+        combine [label="查询 + 检索结果\n组合输入"];
+        prompt  [label="注入上下文\n(prompt)"];
+        llm     [label="LLM 生成\n最终回答"];
+        combine -> prompt -> llm;
+    }
+
+    // ─── 起始节点（row 1 顶部） ──────────────────────────
+    query [label="用户查询" shape=ellipse style=filled fillcolor="#fff3e0" color="#e65100"];
+
+    // ─── 跨行连接（箭头全部向下） ───────────────────────
+    query -> embed;
+    embed   -> vecsearch;
+    topk    -> combine;
+}

@@ -1,3 +1,5 @@
+\\newpage
+
 # 第11章：MarkItDown MCP 工具：文件格式转换与网页读取 {#ch:11}
 
 ## 11.1 什么是 MarkItDown MCP？
@@ -8,8 +10,8 @@
 Office 文档等）转换为 Markdown 文本，让 AI 模型可以直接理解和处理。
 
 !!! info "重要区分"
-    MarkItDown MCP 是一个 **MCP 工具**，由 Agent 在对话中自主调用，**不是** Hermes 的 `web.extract_backend`。Web 提取后端（`web_extract`）由 `firecrawl`、`tavily`、`exa`、`parallel` 等后端提供（见第10章）。
-    通过 Plugin，MarkItDown MCP 也可以被设置为网页提取后端的自定义实现，见[第19章](../volume-3/19-markitdown-extract.md)。
+    MarkItDown MCP 是一个 **MCP 工具**，由 Agent 在对话中自主调用，**不是** Hermes 的 `web.extract_backend`。Web 提取后端（`web_extract`）由 `firecrawl`、`tavily`、`exa`、`parallel` 等后端提供（见[第10章](../volume-2/10-searxng.md#ch:10)）。
+    通过 Plugin，MarkItDown MCP 也可以被设置为网页提取后端的自定义实现，见[第20章](../volume-3/20-markitdown-extract.md)。
 
 ### MarkItDown 的能力
 
@@ -129,6 +131,6 @@ export GLM_API_KEY="your-api-key"
 ## 11.6 作为网页提取后端
 
 通过编写插件来替换 Hermes Agent 原有的实现，MarkItDown MCP 可以作为 `web_extract` 的后端使用。
-详见[第19章 MarkItDown 网页提取后端](../volume-3/19-markitdown-extract.md)，其中介绍了如何将其作为 Plugin 集成到 Hermes 中。
+详见[第20章 MarkItDown 网页提取后端](../volume-3/20-markitdown-extract.md)，其中介绍了如何将其作为 Plugin 集成到 Hermes 中。
 
 ---

@@ -1,3 +1,5 @@
+\\newpage
+
 # 第2章：安装前准备 {#ch:2}
 
 Hermes Agent 支持 **Linux、macOS 和 Windows（WSL 2 或原生）**。如果你的电脑已经是 Linux，可以直接跳到[第3章](03-installation.md#ch:3)开始安装。

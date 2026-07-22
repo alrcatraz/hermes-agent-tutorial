@@ -1,3 +1,5 @@
+\\newpage
+
 # 第9章：Gateway 会话打断配置 {#ch:9}
 
 ## 9.1 什么是会话打断？
@@ -17,8 +19,9 @@ Agent 处理任务时可能需要一些时间。**会话打断**允许你在 Age
 `busy_text_mode` 控制 Gateway 在 Agent 忙碌时的行为：
 
 ```yaml
-agent:
- busy_text_mode: interrupt
+[display]
+busy_text_mode: interrupt
+busy_input_mode: interrupt
 ```
 
 | 模式 | 行为 | 适用场景 |

@@ -1,3 +1,5 @@
+\\newpage
+
 # 第14章：Astra Hub——生态门户 {#ch:14}
 
 
@@ -24,7 +26,7 @@
 
 | 路径 | 内容 | 用途 |
 |:----|:------|:------|
-| `~/astra/<repo>/` | 公开代码 | 推送到 GitHub |
+| `~/Projects/astra/<component>/` | 公开代码 | 推送到 GitHub |
 | `~/.astra/repos/<repo>/` | 私有副本（含个人数据覆盖层） | 本地运行，.gitignore 屏蔽个人配置 |
 
 ## 14.2 技能注册表

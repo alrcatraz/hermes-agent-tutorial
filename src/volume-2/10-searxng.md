@@ -1,3 +1,5 @@
+\\newpage
+
 # 第10章：SearXNG 部署与搜索配置 {#ch:10}
 
 ## 10.1 什么是 SearXNG？
@@ -326,7 +328,7 @@ web:
 | `parallel` | ✅ | 并行搜索 + 批量提取 |
 
 !!! note "提示"
-    Hermes 支持通过 Plugin 自定义提取后端。你可以编写 Plugin 来替换 `web_extract` 工具的实现（例如使用 Jina Reader API、本地 MarkItDown MCP 服务等），无需依赖上述四个全功能后端。参考实现见[第19章](../volume-3/19-markitdown-extract.md)的 MarkItDown MCP 提取方案。
+    Hermes 支持通过 Plugin 自定义提取后端。你可以编写 Plugin 来替换 `web_extract` 工具的实现（例如使用 Jina Reader API、本地 MarkItDown MCP 服务等），无需依赖上述四个全功能后端。参考实现见[第20章](../volume-3/20-markitdown-extract.md)的 MarkItDown MCP 提取方案。
 
 如果你使用 Firecrawl 等后端，以下是常见问题和应对策略：
 

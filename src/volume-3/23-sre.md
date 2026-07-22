@@ -1,10 +1,12 @@
-# 第22章：个人设备健康检测与自动维护（SRE） {#ch:22}
+\\newpage
+
+# 第23章：个人设备健康检测与自动维护（SRE） {#ch:23}
 
 !!! info "本章对应 Astra 生态组件"
     - [`astra-sre`](https://github.com/alrcatraz/astra-sre) — 统一 SRE 协调层
     - Service Inventory — 服务清单与健康检查
 
-## 22.1 为什么需要个人 SRE？
+## 23.1 为什么需要个人 SRE？
 
 单机运维常常被忽视——出了问题再临时修复。Astra SRE 的思路是将**生产环境的可靠性实践**引入个人设备管理：
 
@@ -12,13 +14,13 @@
 - **看门狗机制**：核心服务实时监控
 - **自动修复**：常见故障自动处理
 
-## 22.2 SRE 的层次架构
+## 23.2 SRE 的层次架构
 
 ![Astra SRE 层次架构](../diagrams/sre-architecture.svg)
 
 ---
 
-## 22.3 设备清单管理
+## 23.3 设备清单管理
 
 Astra SRE 通过 `config/devices.yaml` 管理所有设备。设备的登录凭据（SSH 密码、sudo 密码）**不直接存储在该文件中**——它们通过 `~/.astra/credentials/*.yaml.gpg` 文件读取（[见第15章 §15.4](../volume-3/15-credentials.md#sec:15.4) 的系统二）：
 
@@ -44,9 +46,9 @@ devices:
 
 设备访问矩阵示例：
 
-## 22.4 每日健康巡检
+## 23.4 每日健康巡检 {#sec:23.4}
 
-### 20.4.1 health-scan.py
+### 23.4.1 health-scan.py {#sec:23.4.1}
 
 核心巡检脚本位于 `astra-sre/scripts/health-scan.py`。一次运行 SSH 到所有配置设备，收集：
 
@@ -88,7 +90,7 @@ uv run python3 scripts/health-scan.py --output json
     · dev-server: 磁盘 88%
 ```
 
-### 20.4.2 Cron 调度
+### 23.4.2 Cron 调度
 
 巡检 cron 配置：
 
@@ -97,7 +99,7 @@ uv run python3 scripts/health-scan.py --output json
 | Job ID | `e6d8320767aa` |
 | 名称 | `astra-sre 每日巡检` |
 | 调度 | `0 8 * * *`（每日 08:00 HKT） |
-| 模式 | `no_agent`（脚本 stdout 直接投递，无 LLM 中转） |
+| 模式 | `no_agent`（脚本 stdout 直接投递，中文输出） |
 | Workdir | `astra-sre/`（仓库根目录） |
 | 投递目标 | Home room 📊 线程 |
 
@@ -116,14 +118,14 @@ unset VIRTUAL_ENV          # 防止 Hermes venv 泄漏到 uv
 exec uv run python3 scripts/health-scan.py
 ```
 
-### 20.4.3 运行时选择原则
+### 23.4.3 运行时选择原则
 
 | 任务类型 | 模式 | 理由 |
 |:---------|:----:|:-----|
 | 跑脚本 → 直接投递 stdout | `no_agent` | 纯机械任务，LLM 无增量价值 |
 | 汇总数据、决策报告内容 | `agent`（LLM 驱动） | 需要 LLM 判断力 |
 
-## 22.5 服务级健康检查（每小时）
+## 23.5 服务级健康检查（每小时）
 
 服务级健康检查由 `service-inventory` skill 管理，与 astra-sre 的**设备级**巡检是**不同层次**的监控：
 
@@ -145,7 +147,7 @@ exec uv run python3 scripts/health-scan.py
 
 结果写入 `service_mgmt` 知识库，异常时通过 Gateway 发送通知。
 
-## 22.6 月度维护
+## 23.6 月度维护
 
 每月 1 日运行的维护脚本 `astra-sre-refresh.sh`（`no_agent`，静默运行）：
 
@@ -164,7 +166,7 @@ sqlite3 /path/to/knowledge-base.db "VACUUM;"
 
 `learn.py --cron` 按 **"两次原则"** 工作：扫描 `sre_incidents` 知识库，寻找出现 2 次以上且缺少对应 sub-skill 的问题模式，自动生成 SKILL.md 模板建议。
 
-## 22.7 分层修复机制
+## 23.7 分层修复机制
 
 Astra SRE 的修复操作按影响级别分为三层：
 
@@ -174,7 +176,7 @@ Astra SRE 的修复操作按影响级别分为三层：
 | **L2** | 短暂/可选服务影响 | 重启非关键服务、只读诊断 | ✅ 自动+通知 |
 | **L3** | 不可逆或高风险 | 数据删除、Token 更换、服务重建 | 🔴 必须人工确认 |
 
-所有自动修复步骤都必须有 **验证探针**（verify probe），复用 `health-scan.py --json` 对比修复前后的状态。如果状态恶化 → 触发回滚或升级到 L3。
+所有自动修复步骤都必须有 **验证探针**（verify probe），复用 `health-scan.py --output json` 对比修复前后的状态。如果状态恶化 → 触发回滚或升级到 L3。
 
 **并发保护：** 使用锁文件 `/tmp/astra-sre-lock-<tag>.lock`（含 PID + 时间戳），通过 `kill -0 <PID>` 检测活锁。旧 PID 已死 → 自动清除（处理 SIGKILL / 崩溃残留）。按事故标签锁定，防止看门狗和诊断脚本互相踩踏。
 

@@ -1,0 +1,17 @@
+digraph RAGEvolution {
+    rankdir=TB;
+    node [fontname="sans-serif" fontsize=9 shape=box style="filled,rounded"];
+    edge [fontname="sans-serif" fontsize=8];
+
+    naive [label="Naive RAG (2023)\n单一向量检索，简单问答" fillcolor="#e3f2fd" color="#1565c0"];
+
+    graphrag [label="GraphRAG (Microsoft, 2024)\n实体关系图 + 社区摘要\n全局归纳强，但成本极高" fillcolor="#fff3e0" color="#e65100"];
+
+    hippo [label="HippoRAG 2 (OSU/CMU, 2025)\nPersonalised PageRank 多跳推理\n依赖 embedding 质量" fillcolor="#f3e5f5" color="#7b1fa2"];
+
+    sag [label="SAG (Zleap-AI, 2026, arXiv 2606.15971)\nSQL 检索增强生成\n用 SQL JOIN 取代图遍历\n同时解决多跳和增量问题" fillcolor="#e8f5e9" color="#2e7d32"];
+
+    naive -> graphrag [label="更强推理"];
+    naive -> hippo [label="多跳检索"];
+    naive -> sag [label="增量+多跳"];
+}

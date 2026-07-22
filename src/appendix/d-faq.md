@@ -68,7 +68,7 @@ stdout 直接投递，无需 LLM 中转，零管道断裂风险。
 
 A: 对于纯脚本任务（数据收集、状态检查），使用 `no_agent=true` 模式绕过 LLM，
 脚本 stdout 直接投递。对于需要总结、筛选、判断的任务才使用 agent 模式。
-详见第[二十章](../volume-3/20-camofox.md#ch:20)的运行时选择原则。
+详见第[21章](../volume-3/21-camofox.md#ch:21)的运行时选择原则。
 
 **Q: Plugin 启用后不生效？**
 
@@ -101,6 +101,26 @@ A: 国内网络环境中，部分 Provider API 端点可能被阻断。按以下
 3. 配置多 Provider 回退（详见[第7章](../volume-2/07-multi-model.md#ch:7)多模型协作）
 4. 使用 `hermes gateway status` 确认 Gateway 平台在线
 
+**Q: 教程更新后如何同步本地副本？**
+
+A: 确保你的开发副本指向最新版本：
+
+```bash
+cd ~/Projects/astra/hermes-agent-tutorial
+git pull origin main
+```
+
+教程版本号可在 `README.md` 的 YAML frontmatter 中查看。当前最新版本：v3.1.0。
+PDF 编译完成后封面副标题会显示版本号。更新日志见 GitHub Release 页面。
+
+**Q: 教程中的版本与我所用的 Hermes 版本不匹配？**
+
+A: 教程的版本号（如 v3.1.0）独立于 Hermes Agent 自身的版本号。Hermes Agent 版本在[第3章](../volume-1/03-installation.md#ch:3)安装说明中注明。如果教程中引用的 Hermes 行为与你实际使用的版本不符，请检查：
+
+1. 你的 Hermes 版本：`hermes --version`
+2. 教程的测试环境（见本文档底部表格）
+3. 如果存在差异，以 Hermes 官方文档为准
+
 ---
 
 基于 Hermes Agent 实际部署和配置经验编写
@@ -117,10 +137,10 @@ Hermes Agent 官方文档：[https://hermes-agent.nousresearch.com/docs/](https:
 |:-----|:-----|
 | 主力机器 | openSUSE Tumbleweed |
 | CPU | Intel 8250U |
-| 内存 | 32 GB DDR4 2666|
+| 内存 | 16 GB DDR4 2666|
 | 安装方式 | curl 一行命令安装器（Shell） |
-| Hermes Agent 版本 | 0.18.3 |
-| Gateway 平台 | Matrix（自建 Synapse）+ QQ + 微信 |
+| Hermes Agent 版本 | 0.19.0 |
+| Gateway 平台 | Matrix（自建 Synapse） |
 | 搜索后端 | 自托管 SearXNG（Podman + Valkey） |
 | 网页提取后端 | web-extract-markitdown Plugin（MarkItDown MCP） |
 | MarkItDown 提取 | 微软 MarkItDown MCP + GLM-4.6V-Flash OCR |

@@ -1,8 +1,10 @@
+\\newpage
+
 # 第6章：Agent 的工作原则 {#ch:6}
 
 !!! note "本章对应"
     - SOUL 文件：`~/.hermes/SOUL.md`
-    - 执行层：[第17章](../volume-3/17-work-principles.md) 工作原则 Skill 体系
+    - 执行层：[第16章](../volume-3/16-agentic-harness.md) Agentic Harness + [第18章](../volume-3/18-work-principles.md) 工作原则 Skill 体系
 
 ## 6.1 什么是 SOUL？
 
@@ -12,9 +14,9 @@ SOUL 它定义了 Agent 的**身份、语调**。
     SOUL 说"**做什么**"（宪法层——原则、身份、语调），Skill 说"**怎么做**"（执行层——具体的操作流程和检查清单）。两者配合：SOUL 定基调，Skill 保执行。
 
 !!! question "为什么工作原则出现在 SOUL 中？"
-    严格来说，Hermes 官方将 SOUL 定位为"身份与语调"文件。但实际使用中发现，SOUL 是 **Hermes 唯一能在每次会话开始时无条件注入的系统提示扩展点**。而 Skill 是**按场景按需加载**的——并非所有类型的会话（如子代理、定时任务）都会自动加载 Skill。
+    严格来说，Hermes 官方将 SOUL 定位为"身份与语调"文件。但实际使用中发现，SOUL 是 **Hermes 唯一能在每次会话开始时无条件注入的系统提示扩展点**。而 Skill 是**按场景按需加载**的——并非所有类型的会话（如子智能体、定时任务）都会自动加载 Skill。
 
-    因此，少量的**最底层安全规则**（诚实优先、先保全再改、递进验证）写入 SOUL，是为了确保**无论在什么会话模式下**，这些不可逾越的底线始终生效。而完整的 7+ 条工作原则及其执行流程，由[第17章](../volume-3/17-work-principles.md)介绍的 Skill 体系承载。
+    因此，少量的**最底层安全规则**（诚实优先、先保全再改、递进验证）写入 SOUL，是为了确保**无论在什么会话模式下**，这些不可逾越的底线始终生效。而完整的 7+ 条工作原则及其执行流程，由[第16章](../volume-3/16-agentic-harness.md)介绍的 Agentic Harness 和[第18章](../volume-3/18-work-principles.md)介绍的 Skill 体系承载。
 
 ## 6.2 工作原则
 
@@ -61,13 +63,14 @@ nano ~/.hermes/SOUL.md
 # 新会话自动加载，无需重启
 
 # 验证当前 SOUL 是否生效
-hermes config get soul
+cat ~/.hermes/SOUL.md
 ```
 
 ## 6.4 延伸阅读
 
-- **执行流程**：[第17章](../volume-3/17-work-principles.md) 工作原则 Skill 体系
-- **Plugin 系统**：[第18章](../volume-3/18-context-anchor.md) Context Anchor
-- **开发者指南**：[第23章](../volume-3/23-developer-guide.md) 开发者指南
+- **执行框架**：[第16章](../volume-3/16-agentic-harness.md) Agentic Harness — 纪律门与阶段状态机
+- **执行流程**：[第18章](../volume-3/18-work-principles.md) 工作原则 Skill 体系
+- **Plugin 系统**：[第19章](../volume-3/19-context-anchor.md) Context Anchor
+- **开发者指南**：[第24章](../volume-3/24-developer-guide.md) 开发者指南
 
 ---

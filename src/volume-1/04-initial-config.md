@@ -1,3 +1,5 @@
+\\newpage
+
 # 第4章：首次配置与启动 {#ch:4}
 
 ## 4.1 选择 Provider 和模型
@@ -134,7 +136,7 @@ hermes desktop
 
 ```bash
 # 通过 IP 连接
-hermes desktop --gateway http://100.x.x.x:8080
+hermes desktop --source https://hermes-agent.nousresearch.com/desktop/latest  # 下载并启动桌面版
 
 # 或指定完整的 Gateway API URL
 hermes desktop --gateway https://your-server.com:8080

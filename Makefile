@@ -30,14 +30,15 @@ SRC := \
 	$(DOCS)/volume-3/13-astra-intro.md \
 	$(DOCS)/volume-3/14-astra-hub.md \
 	$(DOCS)/volume-3/15-credentials.md \
-	$(DOCS)/volume-3/16-knowledge-base.md \
-	$(DOCS)/volume-3/17-work-principles.md \
-	$(DOCS)/volume-3/18-context-anchor.md \
-	$(DOCS)/volume-3/19-markitdown-extract.md \
-	$(DOCS)/volume-3/20-camofox.md \
-	$(DOCS)/volume-3/21-office-tools.md \
-	$(DOCS)/volume-3/22-sre.md \
-	$(DOCS)/volume-3/23-developer-guide.md \
+	$(DOCS)/volume-3/16-agentic-harness.md \
+	$(DOCS)/volume-3/17-knowledge-base.md \
+	$(DOCS)/volume-3/18-work-principles.md \
+	$(DOCS)/volume-3/19-context-anchor.md \
+	$(DOCS)/volume-3/20-markitdown-extract.md \
+	$(DOCS)/volume-3/21-camofox.md \
+	$(DOCS)/volume-3/22-office-tools.md \
+	$(DOCS)/volume-3/23-sre.md \
+	$(DOCS)/volume-3/24-developer-guide.md \
 	$(DOCS)/appendix/_divider.md \
 	$(DOCS)/appendix/a-concepts.md \
 	$(DOCS)/appendix/b-toolchain.md \
@@ -60,6 +61,9 @@ pdf: $(PDF)
 
 $(PDF): $(SRC)
 	@mkdir -p $(OUTDIR)
+	$(eval VERSION := $(shell sed -n 's/^version: //p' README.md))
+	$(eval PUBDATE := $(shell sed -n 's/^date: //p' README.md))
+	echo '\newcommand{\coverdate}{$(PUBDATE)  v$(VERSION)}' > $(STYLES)/_coverdate.tex
 	pandoc $^ \
 		--pdf-engine=lualatex \
 		--listings \
@@ -70,8 +74,10 @@ $(PDF): $(SRC)
 		--highlight-style=tango \
 		-V colorlinks=true \
 		-V geometry:margin=1in \
+		-H $(STYLES)/_coverdate.tex \
 		-H $(STYLES)/astra-doc-style.sty \
 		-o $@
+	rm -f $(STYLES)/_coverdate.tex
 	@echo "PDF generated: $@"
 
 clean:

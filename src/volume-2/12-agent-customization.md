@@ -1,3 +1,5 @@
+\\newpage
+
 # 第12章：Agent 定制（SOUL 与 Personality） {#ch:12}
 
 ## 12.1 配置即身份
@@ -32,11 +34,11 @@ Hermes 内置了多种 personality：
 | `uwu` | uwu 语癖 | 趣味 |
 | `hype` | 高能激燃 | 趣味 |
 
-> **注意**：`mentor` 是用户通过 `config.yaml` 自定义的 personality，**不是** Hermes 内置的。上表列出的是 Hermes 原生的 14 种内置 personality，`mentor` 等自定义 personality 的配置方法见 [12.4 节](#12.4)。
+> **注意**：上表列出的是 Hermes 原生的 14 种内置 personality，自定义 personality 的配置方法见 [12.4 节](#12.4)。
 
 ```bash
 # 切换 personality
-hermes config set display.personality mentor
+hermes config set display.personality technical
 ```
 
 ## 12.4 自定义 Personality {#12.4}

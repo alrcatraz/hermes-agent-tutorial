@@ -1,8 +1,10 @@
+\\newpage
+
 # 第1章：认识 Hermes Agent {#ch:1}
 
 ## 1.1 什么是 Hermes Agent？
 
-Hermes Agent 是由 **Nous Research** 开发的开源 AI 代理框架，基于 Apache-2.0 许可证发布。它的核心是一个**能够使用工具的 AI 对话系统**——不是简单的 Chatbot，而是一个可以执行命令、读写文件、搜索网页、调用 API、运行代码的自主代理。
+Hermes Agent 是由 **Nous Research** 开发的开源 AI 智能体框架，基于 Apache-2.0 许可证发布。它的核心是一个**能够使用工具的 AI 对话系统**——不是简单的 Chatbot，而是一个可以执行命令、读写文件、搜索网页、调用 API、运行代码的自主智能体。
 
 > **一句话描述：** Hermes Agent 是一个跑在你电脑上的 AI 助手，它能理解你的自然语言指令，然后调用各种工具来完成你的任务。
 
@@ -54,7 +56,7 @@ OpenClaw 是 Hermes Agent 的前身。Hermes Agent 最初是 OpenClaw 的一个*
 | 设计哲学 | 极简、本地优先 | 全功能、企业级 |
 | 跨平台通信 | CLI 为主 | 15+ 平台 Gateway（QQ/钉钉/Telegram/Matrix 等） |
 | 外部记忆 | 有限（上下文窗口） | 多层次记忆系统（Holographic Memory） |
-| 多模型协作 | 单模型 | 多 Provider 路由，子代理独立模型 |
+| 多模型协作 | 单模型 | 多 Provider 路由，子智能体独立模型 |
 | Provider 支持 | 有限 | 20+ Provider，支持 Credential Pool |
 | Skills 机制 | 无 | 成熟的技能库，Agent 自我改进 |
 | Cron 任务 | 无 | 内置调度器，多平台投递 |
@@ -82,11 +84,12 @@ OpenClaw 是 Hermes Agent 的前身。Hermes Agent 最初是 OpenClaw 的一个*
 | 第二卷 | MarkItDown MCP — 文档分析与网页提取 | [第11章](../volume-2/11-markitdown.md#ch:11) |
 | 第二卷 | Agent 定制（SOUL 与 Personality） | [第12章](../volume-2/12-agent-customization.md#ch:12) |
 | 第三卷 | Astra 生态总览与 Hub 门户 | [第13章](../volume-3/13-astra-intro.md#ch:13)～[第14章](../volume-3/14-astra-hub.md#ch:14) |
-| 第三卷 | 登录凭据管理与知识库 | [第15章](../volume-3/15-credentials.md#ch:15)～[第16章](../volume-3/16-knowledge-base.md#ch:16) |
-| 第三卷 | 工作原则 Skill 体系与 Plugin 扩展 | [第17章](../volume-3/17-work-principles.md#ch:17)～[第18章](../volume-3/18-context-anchor.md#ch:18) |
-| 第三卷 | MarkItDown 提取后端、Camofox 浏览器自动化 | [第19章](../volume-3/19-markitdown-extract.md#ch:19)～[第20章](../volume-3/20-camofox.md#ch:20) |
-| 第三卷 | Office 工具、SRE 个人运维 | [第21章](../volume-3/21-office-tools.md#ch:21)～[第22章](../volume-3/22-sre.md#ch:22) |
-| 第三卷 | **开发者指南**（Plugin 开发与生态贡献） | [第23章](../volume-3/23-developer-guide.md#ch:23) |
+| 第三卷 | 登录凭据管理与知识库 | [第15章](../volume-3/15-credentials.md#ch:15)～[第17章](../volume-3/17-knowledge-base.md#ch:17) |
+| 第三卷 | Agentic Harness 与工作原则 | [第16章](../volume-3/16-agentic-harness.md#ch:16)～[第18章](../volume-3/18-work-principles.md#ch:18) |
+| 第三卷 | Context Anchor 与 MarkItDown 提取 | [第19章](../volume-3/19-context-anchor.md#ch:19)～[第20章](../volume-3/20-markitdown-extract.md#ch:20) |
+| 第三卷 | Camofox 浏览器与 Office 工具 | [第21章](../volume-3/21-camofox.md#ch:21)～[第22章](../volume-3/22-office-tools.md#ch:22) |
+| 第三卷 | SRE 个人运维 | [第23章](../volume-3/23-sre.md#ch:23) |
+| 第三卷 | **开发者指南**（Plugin 开发与生态贡献） | [第24章](../volume-3/24-developer-guide.md#ch:24) |
 | 附录 | 核心概念速览、工具链、配置示例、FAQ | [附录A](../appendix/a-concepts.md#appendix:a)～[附录D](../appendix/d-faq.md#appendix:d) |
 
 ---

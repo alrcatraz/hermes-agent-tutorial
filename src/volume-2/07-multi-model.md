@@ -1,3 +1,5 @@
+\\newpage
+
 # 第7章：多模型协作配置 {#ch:7}
 
 ## 7.1 架构思路
@@ -8,7 +10,7 @@
 | 角色 | 推荐 Provider | 典型模型 |
 |:-----|:-------------|:---------|
 | 主模型（对话、编码） | DeepSeek | deepseek-v4-flash |
-| 子代理（复杂推理） | DeepSeek | deepseek-v4-pro |
+| 子智能体（复杂推理） | DeepSeek | deepseek-v4-pro |
 | 视觉理解 | 智谱 BigModel | **GLM-4.6V-Flash**（免费） |
 | 网页摘要 | 智谱 BigModel | **GLM-4.7-Flash**（免费） |
 | 对话压缩 | 智谱 BigModel | **GLM-4.7-Flash**（免费） |
@@ -52,9 +54,9 @@ hermes config set model.default "deepseek-v4-flash"
 hermes config set model.provider "deepseek"
 ```
 
-## 7.4 配置子代理模型
+## 7.4 配置子智能体模型
 
-子代理可以独立使用其他模型：
+子智能体可以独立使用其他模型：
 
 ```bash
 hermes config set delegation.provider "deepseek"

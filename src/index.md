@@ -14,7 +14,7 @@
 
 ---
 
-**Hermes Agent** 是一个由 [Nous Research](https://nousresearch.com/) 开发的开源 AI 代理框架。
+**Hermes Agent** 是一个由 [Nous Research](https://nousresearch.com/) 开发的开源 AI 智能体框架。
 本教程带你从零开始，逐步学会安装、配置和定制自己的 Hermes Agent。
 
 ## 📚 内容导航
@@ -54,14 +54,15 @@
 | [第13章：Astra 生态总览](volume-3/13-astra-intro.md) | 生态概览与组件定位 | 总览 |
 | [第14章：Astra Hub——生态门户](volume-3/14-astra-hub.md) | 项目索引、服务注册、模板引擎 | 总览 |
 | [第15章：登录凭据管理](volume-3/15-credentials.md) | GPG 加密注入、KeePassXC | 安全 |
-| [第16章：知识库与信息分级储存](volume-3/16-knowledge-base.md) | MCP 知识库、三层存储架构 | 存储 |
-| [第17章：工作原则 Skill 体系](volume-3/17-work-principles.md) | SOUL→Plugin→Skill 执行管线 | 工程 |
-| [第18章：Context Anchor](volume-3/18-context-anchor.md) | 跨会话上下文锚定 | 集成 |
-| [第19章：MarkItDown 网页提取后端](volume-3/19-markitdown-extract.md) | 本地 MarkItDown MCP Plugin | 文档 |
-| [第20章：浏览器自动化与登录持久化（Camofox）](volume-3/20-camofox.md) | 电商价格监控、无头浏览器 | 自动化 |
-| [第21章：Office 工具与文档撰写](volume-3/21-office-tools.md) | OfficeCLI、TeX Live、Pandoc | 办公 |
-| [第22章：个人设备健康检测与自动维护（SRE）](volume-3/22-sre.md) | SRE 巡检、看门狗机制 | 运维 |
-| [第23章：开发者指南](volume-3/23-developer-guide.md) | Plugin 开发、lifecycle-sync、部署管线 | 开发 |
+| [第16章：Agentic Harness](volume-3/16-agentic-harness.md) | 智能体行为约束框架 | 工程 |
+| [第17章：知识库与信息分级储存](volume-3/17-knowledge-base.md) | MCP 知识库、三层存储架构 | 存储 |
+| [第18章：工作原则 Skill 体系](volume-3/18-work-principles.md) | SOUL→Plugin→Skill 执行管线 | 工程 |
+| [第19章：Context Anchor](volume-3/19-context-anchor.md) | 跨会话上下文锚定 | 集成 |
+| [第20章：MarkItDown 网页提取后端](volume-3/20-markitdown-extract.md) | 本地 MarkItDown MCP Plugin | 文档 |
+| [第21章：浏览器自动化与登录持久化（Camofox）](volume-3/21-camofox.md) | 电商价格监控、无头浏览器 | 自动化 |
+| [第22章：Office 工具与文档撰写](volume-3/22-office-tools.md) | OfficeCLI、TeX Live、Pandoc | 办公 |
+| [第23章：个人设备健康检测与自动维护（SRE）](volume-3/23-sre.md) | SRE 巡检、看门狗机制 | 运维 |
+| [第24章：开发者指南](volume-3/24-developer-guide.md) | Plugin 开发、lifecycle-sync、部署管线 | 开发 |
 
 ### 附录
 

@@ -1,6 +1,6 @@
 ---
-version: 3.0.0
-date: 2026-07-06
+version: 3.1.0
+date: 2026-07-22
 ---
 
 # Hermes Agent Complete Tutorial
@@ -27,7 +27,7 @@ This tutorial takes you from zero to production. Available as both a [web site](
 
 - **Volume I — Basics (Chapters 1–6)** — Installation, initial configuration, Gateway setup, work principles
 - **Volume II — Intermediate (Chapters 7–12)** — Multi-model collaboration, external memory, SearXNG, MarkItDown, Agent customisation
-- **Volume III — Advanced (Chapters 13–20)** — Knowledge base, Skills, credential management, SRE, browser automation, Office tools
+- **Volume III — Advanced (Chapters 13–24)** — Astra ecosystem overview, Astra Hub, credential management, Agentic Harness, knowledge base, Skill system, context anchoring, MarkItDown extraction, Camofox, Office tools, SRE, developer guide
 - **Appendix** — Concepts reference, toolchain comparison, full config example, FAQ
 
 It is the companion tutorial of the [Astra ecosystem](https://github.com/alrcatraz/astra-aiagent-infra).
@@ -80,6 +80,7 @@ The GitHub Actions workflow in `.github/workflows/deploy.yml` automatically buil
 make pdf
 # or manually:
 pandoc \
+  src/pdf-metadata.yaml \
   src/introduction.md \
   src/volume-1/*.md \
   src/volume-2/*.md \
@@ -93,9 +94,12 @@ pandoc \
   --highlight-style=tango \
   -V colorlinks=true \
   -V geometry:margin=1in \
+  -H styles/_coverdate.tex \
   -H styles/astra-doc-style.sty \
   -o build/hermes-agent-tutorial.pdf
 ```
+
+Cover date/version is auto-synced from `README.md` YAML frontmatter via `Makefile`.
 
 ## Related
 

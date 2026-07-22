@@ -1,3 +1,5 @@
+\\newpage
+
 # 第5章：配置 Gateway {#ch:5}
 
 Gateway 是 Hermes Agent 的可选组件，但强烈推荐配置。通过 Gateway，你可以在手机上通过 QQ、钉钉、Telegram、Matrix 等平台远程操控 Hermes，不再局限于电脑前。

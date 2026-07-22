@@ -1,3 +1,5 @@
+\\newpage
+
 # 第3章：安装 Hermes Agent {#ch:3}
 
 ## 3.1 三种安装方式对比
@@ -153,7 +155,7 @@ hermes doctor
 
 
 ```
-Hermes CLI              v0.18.3
+Hermes CLI              v0.19.0
 Python                  3.11.15
 Linux kernel            6.7.0
 Terminal backend        local

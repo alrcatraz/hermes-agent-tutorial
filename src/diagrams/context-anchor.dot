@@ -1,30 +1,20 @@
 digraph ContextAnchor {
-  rankdir=LR;
-  bgcolor="transparent";
-  fontname="sans-serif";
-  fontsize=10;
-  nodesep=0.3;
-  ranksep=0.5;
-  splines=ortho;
+  rankdir=TB; bgcolor="transparent";
+  fontname="sans-serif"; fontsize=9;
+  nodesep=0.15; ranksep=0.3; splines=true; pad=0.15;
+  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin="0.12,0.08"];
 
-  node [shape=box, style="filled,rounded", fontname="sans-serif", fontsize=9, margin=0.15];
+  ssh_connect [label="SSH 连接建立", fillcolor="#e3f2fd" color="#4a90d9"];
+  record_sid  [label="记录 session_id", fillcolor="#e3f2fd" color="#4a90d9"];
+  infer_task  [label="推断 task", fillcolor="#e3f2fd" color="#4a90d9"];
+  detect_ssh  [label="检测 SSH", fillcolor="#e3f2fd" color="#4a90d9"];
+  cond [shape=diamond, style=filled label="SSH\n已检测?" fillcolor="#fff3cd" color="#f0ad4e" fontcolor="#856404" margin="0.06,0.04" fontsize=9];
+  inject [label="注入标头", fillcolor="#e8f8e8" color="#27ae60"];
+  done [label="完成", fillcolor="#27ae60" color="#1e8449" fontcolor="white" fontweight="bold"];
+  wait [label="等待重试", fillcolor="#fce4ec" color="#e53935" fontsize=8 margin="0.08,0.06"];
 
-  subgraph cluster_hooks {
-    label="Hermes 生命周期钩子";
-    style="filled,rounded";
-    fillcolor="#E3F2FD";
-    color="#1565C0";
-    fontcolor="#0D47A1";
-
-    pre [label="pre_llm_call\n读取 state.json\n→ 注入标头", fillcolor="#BBDEFB"];
-    post [label="post_tool_call\n→ 记录 session_id\n→ 推断 task\n→ 检测 SSH", fillcolor="#BBDEFB"];
-  }
-
-  state [label="state.json\n~/.hermes/persistent/\ncurrent_host\ncurrent_task\nthread_session_ids", fillcolor="#FFF3E0", color="#E65100"];
-
-  sysprompt [label="系统提示词\n[AGENT CONTEXT]\nhost=HomeCentre01\ntask=network-maintenance\n[THREAD HISTORY]\n3 sessions", fillcolor="#E8F5E9", color="#2E7D32"];
-
-  pre -> state [label=" 读取", style=dashed, fontsize=8];
-  post -> state [label=" 写入", style=dashed, fontsize=8];
-  pre -> sysprompt [label=" 修改后传给 LLM", fontsize=8];
+  ssh_connect -> record_sid -> infer_task -> detect_ssh -> cond;
+  cond -> inject [label="是" fontsize=8 fontcolor="#27ae60" color="#27ae60" penwidth=1.5];
+  cond -> wait [label="否" fontsize=8 fontcolor="#e53935" color="#e53935" penwidth=1.5 style=dashed];
+  inject -> done [color="#27ae60" penwidth=1.5];
 }

@@ -1,11 +1,13 @@
-# 第23章：开发者指南 {#ch:23}
+\\newpage
+
+# 第24章：开发者指南 {#ch:24}
 
 !!! note "面向读者"
     如果你想为 Astra 生态贡献新组件、开发自定义 Skill/Plugin/MCP 服务，本章提供完整的开发标准参考。
 
-## Skill 开发
+## 24.1 Skill 开发 {#sec:24.1}
 
-### SKILL.md 格式
+### 24.1.1 SKILL.md 格式 {#sec:24.1.1}
 
 ```yaml
 ---
@@ -21,15 +23,15 @@ Skill正文
 - name 必须 `astra-` 前缀 + kebab-case
 - 版本号遵循语义化版本 2.0.0
 
-### 触发条件
+### 24.1.2 触发条件 {#sec:24.1.2}
 
 使用汉英双语的触发关键词，让 Hermes 在遇到相关任务时自动加载该 skill。
 
-## Plugin 开发
+## 24.2 Plugin 开发 {#sec:24.2}
 
 Hermes 的 plugin 系统支持 `override=True` 替换内置工具。详见[官方文档](https://hermes-agent.nousresearch.com/docs/guides/build-a-hermes-plugin/)。
 
-### Plugin 结构
+### 24.2.1 Plugin 结构 {#sec:24.2.1}
 
 Plugin 目录包含以下文件，每个文件有明确的职责划分：
 
@@ -51,7 +53,7 @@ Plugin 通过注册生命周期钩子与 Hermes 运行时交互：
 | `pre_tool_call` | 工具调用前 | 阻断违反原则的操作 |
 | `on_session_start` | 新会话开始 | 重置状态到初始值 |
 
-### 关键：override=True
+### 24.2.2 关键：override=True {#sec:24.2.2}
 
 替换内置工具需要在 `register()` 中传入 `override=True`：
 ```python
@@ -69,7 +71,7 @@ ctx.register_tool(
 hermes plugins enable <name> --allow-tool-override
 ```
 
-### 状态持久化
+### 24.2.3 状态持久化 {#sec:24.2.3}
 
 每个插件应在 `~/.hermes/persistent/` 下维护独立的状态文件，避免与其他插件冲突：
 
@@ -93,16 +95,16 @@ def get() -> dict:
     return state
 ```
 
-## MCP 服务开发
+## 24.3 MCP 服务开发 {#sec:24.3}
 
 MCP 服务是独立的进程，通过 stdio 或 HTTP 与 Hermes 通信。
 详见[官方 MCP 文档](https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp)。
 
-## lifecycle-sync：自动标记注入
+## 24.4 lifecycle-sync：自动标记注入 {#sec:24.4}
 
 `astra-lifecycle-sync` 是 `astra-aiagent-infra/lifecycle/` 下的同步工具，负责将 registry 中声明的 lifecycle hooks 自动注入到对应的 SKILL.md 文件中。
 
-### 工作原理
+### 24.4.1 工作原理 {#sec:24.4.1}
 
 1. 各组件在 `registry.yaml` 中声明自己的 lifecycle hooks（如 `closure_hooks`, `deploy_hooks`）
 2. `astra-lifecycle-sync.py` 读取 registry，找到每个组件的声明
@@ -117,19 +119,19 @@ cd ~/.astra/repos/astra-aiagent-infra
 python3 lifecycle/astra-lifecycle-sync.py --update
 ```
 
-### 何时运行
+### 24.4.2 何时运行 {#sec:24.4.2}
 
 - **首次部署后**：初始化所有 SKILL.md 的 hooks 标记
 - **修改 registry.yaml 后**：将新的 hook 声明写入对应的 SKILL.md
 - **升级组件后**：确保 hooks 标记与最新 registry 一致
 
-## 部署管线与双副本工作流
+## 24.5 部署管线与双副本工作流 {#sec:24.5}
 
 Plugin 和 Skill 的完整部署遵循"清洁 dev → 同步 → 私密运行时"原则：
 
 ![Lifecycle-Sync 部署管线](../diagrams/lifecycle-sync.svg)
 
-### 双副本结构
+### 24.5.1 双副本结构 {#sec:24.5.1}
 
 | 位置 | 角色 |
 |:-----|:------|
@@ -137,7 +139,7 @@ Plugin 和 Skill 的完整部署遵循"清洁 dev → 同步 → 私密运行时
 | `~/.astra/repos/<component>/` | 私有副本，Hermes 实际加载 |
 | `~/.hermes/plugins/<name>/` 或 `~/.hermes/skills/<domain>/<name>/` | 软链接，指向私有副本 |
 
-### 日常同步流程
+### 24.5.2 日常同步流程 {#sec:24.5.2}
 
 开发副本修改完成后，同步到私有副本：
 
@@ -152,7 +154,7 @@ cd ~/.astra/repos/astra-aiagent-infra
 python3 lifecycle/astra-lifecycle-sync.py --update
 ```
 
-### 脱敏要求
+### 24.5.3 脱敏要求 {#sec:24.5.3}
 
 开发副本推送 GitHub 前需检查：
 
@@ -160,7 +162,7 @@ python3 lifecycle/astra-lifecycle-sync.py --update
 - 无个人凭证（API key、token、密码）
 - 无本地配置（本机的 `.env`、`config.yaml` 特定值）
 
-## Astra 生态标准
+## 24.6 Astra 生态标准 {#sec:24.6}
 
 所有组件必须遵守 [`astra-aiagent-infra/docs/module-development-guide.md`](https://github.com/alrcatraz/astra-aiagent-infra) 中的标准：
 

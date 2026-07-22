@@ -84,9 +84,23 @@ function Figure(fig)
                 fig_label = tostring(figure_count)
               end
 
+              -- Read width from image attributes (keyvals), default to 0.7\textwidth
+              local img_width = "0.7"
+              if item.attributes and item.attributes["width"] then
+                local w = item.attributes["width"]:match("(%d+%.?%d*)")
+                if w then
+                  local num = tonumber(w)
+                  if num and num > 1 then
+                    -- Treat as percentage: 95% → 0.95
+                    img_width = string.format("%.2f", num / 100)
+                  else
+                    img_width = w
+                  end
+                end
+              end
               local latex = "\\begin{figure}[H]\n"
                 .. "  \\centering\n"
-                .. "  \\includegraphics[width=0.7\\textwidth]{" .. item.src .. "}\n"
+                .. "  \\includegraphics[width=" .. img_width .. "\\textwidth]{" .. item.src .. "}\n"
                 .. "  \\caption*{"
                 .. "\\figurename~" .. fig_label .. " " .. alt_text
                 .. "}\n"

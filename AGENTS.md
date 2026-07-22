@@ -60,18 +60,20 @@ mkdocs-material 的提示块内，Markdown 链接语法完全可用。**禁止**
 
 | SVG 文件 | 用途 | 章节 |
 |:---------|:-----|:-----|
-| `principle-to-skill.svg` | SOUL→Plugin→Skill 流水线 | 17 |
+| `principle-to-skill.svg` | SOUL→Plugin→Skill 流水线 | 18 |
 | `lifecycle-sync.svg` | 部署管线（dev→private→hermes） | 17 |
 | `lifecycle-sync-hooks.svg` | LIFECYCLE_HOOKS 注入流程 | 17 |
-| `context-anchor.svg` | Context Anchor 架构 | 18 |
+| `context-anchor.svg` | Context Anchor 架构（Graphviz 重做） | 19 |
+| `rag-flow.svg` | RAG 基本流程（三行竖排布局） | 17 |
 | `credentials-architecture.svg` | 凭据管理双系统 | 15 |
 | `credentials-dir-tree.svg` | credentials/ 目录结构 | 15 |
-| `kb-pg-structure.svg` | PostgreSQL 知识库架构 | 16 |
-| `kb-decision-tree.svg` | 信息分级存储决策树 | 16 |
+| `kb-pg-structure.svg` | PostgreSQL 知识库架构 | 17 |
+| `kb-decision-tree.svg` | 信息分级存储决策树 | 17 |
+| `sag-pipeline.svg` | SAG 事件抽取流水线 | 17 |
 | `plugin-structure.svg` | Plugin 结构 | 18 |
 | `markitdown-workflow.svg` | MarkItDown 工作流 | 11 |
 | `search-flow.svg` | SearXNG 搜索+Plugin提取流程 | 10 |
-| `doc-pipeline.svg` | 双输出管线 | 21 |
+| `doc-pipeline.svg` | 双输出管线 | 22 |
 
 ### 扩展 Markdown 语法
 
@@ -86,7 +88,7 @@ mkdocs-material 的提示块内，Markdown 链接语法完全可用。**禁止**
 
 版本号记录在 `README.md` 的 YAML frontmatter 中（`version: X.Y.Z`）。
 每次修改 PDF/Web 输出前更新版本号。
-当前版本历史：1.0 → 2.0（首次 SVG 引入）→ 3.0（交叉引用标准化 + 缺失 SVG 补齐）。
+当前版本历史：1.0 → 2.0（首次 SVG 引入）→ 3.0（交叉引用标准化 + 缺失 SVG 补齐）→ 3.1（封面自动同步、章节重编号、24 章新增、SVG 重画）。
 
 ## 常见陷阱
 
@@ -119,6 +121,18 @@ mkdocs-material 的提示块内，Markdown 链接语法完全可用。**禁止**
 
 **必须在 Web 和 PDF 两种输出中都验证。**
 
+### 6. 封面日期/版本号硬编码
+
+`astra-doc-style.sty` 中的封面日期和版本号曾被硬编码为旧值。修复后改用 `Makefile` 在编译时从 `README.md` YAML 提取，写入 `styles/_coverdate.tex` 临时文件，通过 `-H` 注入。修改 `README.md` 的 `version` 或 `date` 后会自动同步到封面。
+
+**检查命令：** `grep '\\coverdate' styles/astra-doc-style.sty && grep 'coverdate' Makefile`
+
+### 7. 章节换页机制
+
+如果 `\section` 被重新定义为 `\clearpage\section`，封面后的首个 `\section{引言}` 会产生空白页。修复方案：不要在 `\section` 重定义中包含 `\clearpage`，改为在每个章节的 `.md` 文件第一行加 `\newpage`。
+
+**检查命令：** `grep -r '\\\\newpage' src/volume-*/ | grep '^[^:]*:[1]:'`
+
 ## 构建流水线
 
 ### Web 预览
@@ -134,6 +148,7 @@ uvx --with mkdocs-material mkdocs serve --dev-addr 127.0.0.2:8932
 make pdf
 # 等价于：
 pandoc \
+  src/pdf-metadata.yaml \
   src/introduction.md src/volume-1/*.md src/volume-2/*.md src/volume-3/*.md src/appendix/*.md \
   --pdf-engine=lualatex \
   --listings \
@@ -143,6 +158,7 @@ pandoc \
   --highlight-style=tango \
   -V colorlinks=true \
   -V geometry:margin=1in \
+  -H styles/_coverdate.tex \
   -H styles/astra-doc-style.sty \
   -o build/hermes-agent-tutorial.pdf
 ```

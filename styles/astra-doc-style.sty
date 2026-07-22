@@ -93,28 +93,22 @@
 \geometry{a4paper, margin=2.2cm, headheight=14pt}
 \setstretch{1.1}
 
-%%% Title page — clean minimal, standalone cover, with author/date/version
+%%% Title page --- clean minimal standalone cover
 \pretitle{%
   \thispagestyle{empty}
   \begin{center}\vspace*{4cm}
   \sffamily\huge\bfseries\color{primary}
 }
 \posttitle{%
-  \par
-  \vspace{1cm}
-  {\sffamily\large\color{textsec}作者: alrcatraz (\url{https://github.com/alrcatraz})}
+  \par\vspace{1cm}
+  {\leavevmode\sffamily\large\color{textsec}作者: alrcatraz (\url{https://github.com/alrcatraz})}
   \par\vspace{0.3em}
-  {\sffamily\large\color{textsec}日期: 2026-07-06}
-  \par\vspace{0.3em}
-  {\sffamily\large\color{textsec}版本: v3.0.0}
+  {\leavevmode\sffamily\large\color{textsec}\coverdate}
   \end{center}
   \newpage
 }
 \preauthor{}
 \postauthor{}
-\predate{}
-\postdate{}
-% Suppress empty author/date blocks from pandoc's title page
 \AtBeginDocument{\AfterEndPreamble{%
   \gdef\thepage{\arabic{page}}%
 }}
@@ -129,8 +123,6 @@
 \titlespacing*{\part}{0pt}{0pt}{0pt}
 
 %%% Sections — clean hierarchy, no auto-numbering (numbers are in heading text)
-\let\stdsection\section
-\renewcommand{\section}{\clearpage\stdsection}
 \titleformat{\section}
   {\sffamily\Large\bfseries\color{primary}}
   {}{0em}{}

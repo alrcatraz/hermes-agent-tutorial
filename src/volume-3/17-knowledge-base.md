@@ -322,15 +322,20 @@ mcp_servers:
 
 | 变量 | 默认值 | 说明 |
 |:-----|:-------|:-----|
-| `ASTRA_KB_BACKEND` | `postgres` | 后端类型（`postgres` / `sqlite`） |
+| `ASTRA_KB_BACKEND` | `postgres` | 后端类型（仅 `postgres`） |
 | `ASTRA_KB_PG_DSN` | `dbname=astra_kb user=postgres host=/run/postgresql` | PostgreSQL 连接串 |
 | `ASTRA_EMBED_BASE_URL` | —（必需） | 嵌入 API 端点（OpenAI 兼容，如 `https://api.siliconflow.cn/v1`） |
 | `ASTRA_EMBED_API_KEY` | - | 嵌入 API 密钥（远程 API 必需；本地模型如 llama.cpp 可留空） |
-| `ASTRA_EMBED_MODEL` | `Qwen/Qwen3-Embedding-8B` | 嵌入模型名称 |
+| `ASTRA_EMBED_MODEL` | `Qwen/Qwen3-VL-Embedding-8B` | 嵌入模型名称（VL 版支持图文混合嵌入） |
 | `ASTRA_EMBED_DIM` | `1024` | 嵌入向量维度 |
+| `ASTRA_LLM_BASE_URL` | —（SAG 提取必需） | LLM 端点（OpenAI 兼容，如 `https://api.siliconflow.cn/v1`） |
+| `ASTRA_LLM_API_KEY` | - | SAG 提取 API 密钥 |
+| `ASTRA_LLM_MODEL` | `THUDM/GLM-Z1-9B-0414` | SAG 提取模型 |
 
 !!! tip "环境变量按需配置"
     大多数情况下只需 `ASTRA_KB_BACKEND: postgres`。嵌入服务**无默认提供商**——需至少设置 `ASTRA_EMBED_BASE_URL`。远程 API 还需设置 `ASTRA_EMBED_API_KEY`；本地嵌入模型（如 llama.cpp）无需 API Key，可留空。
+    
+    SAG 事件抽取需要额外设置 `ASTRA_LLM_BASE_URL` 和 `ASTRA_LLM_MODEL`（`ASTRA_LLM_API_KEY` 按需）。若不设置，`kb_extract` 工具会跳过 LLM 提取步骤。
 
 ### 17.6.4 信息分级实战
 
